@@ -117,24 +117,44 @@ public class Main {
 	}
 
 	while (!usernameCorrect);
-		
-		
+//		Maximum 3 attempts allowed
+		int totalAttempts= 3;
 //		Ask for password
 		boolean passwordCorrect = false;
 		
 		do {
 			System.out.println("Please enter your password: ");
 			String password = scanner.nextLine();
-			
-//			if valid log user in
-			if (password.matches(user.getPassword())) {
-				passwordCorrect = true;
-				
-		}
-			else {
-				System.out.println("Password incorrect.");
+
+			if (totalAttempts != 0) {
+//				if valid log user in
+				if (password.matches(user.getPassword())) {
+					passwordCorrect = true;
+
+				} else
+					System.out.println("Password incorrect.");
+				totalAttempts--;
+
+			} else {
+// 				Prompt for password retrieval after maximum invalid password attempts
+				System.out.println("Maximum number of attempts exceeded. Select an option below.");
+				System.out.println("1. Forgotten Password");
+				System.out.println("2. Exit");
+
+				int maxAttemptMenu = scanner.nextInt();
+
+// 				Fixes next line issue
+				scanner.nextLine();
+				switch (maxAttemptMenu) {
+					case 1:
+						forgottenPassword();
+						break;
+					case 2:
+						exit();
+						break;
 				}
 			}
+		}
 		
 		while(!passwordCorrect);
 		
