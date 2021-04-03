@@ -38,6 +38,7 @@ public class Main {
 		System.out.println("--------------------------------------");
 		System.out.println("Main Menu");
 		System.out.println("--------------------------------------");
+		System.out.println("0. Exit");
 		System.out.println("1. Login");
 		System.out.println("2. Create Account");
 		System.out.println("3. Forgotten Password");
@@ -47,17 +48,20 @@ public class Main {
 		System.out.print("Please select an option: ");
 		int menuInput = scanner.nextInt();
 
-		while (menuInput > 3 || menuInput < 1) {
+		while (menuInput > 3 || menuInput < 0) {
 			System.out.print("Please select an option: ");
 			menuInput = scanner.nextInt();
 
 		}
-		;
+
 
 //		fixes Scanner line error
 		scanner.nextLine();
 
 		switch (menuInput) {
+		case 0:
+			exit();
+			break;
 		case 1:
 			login();
 			break;
@@ -68,6 +72,14 @@ public class Main {
 			forgottenPassword();
 			break;
 		}
+
+	}
+
+	private void exit() {
+		System.out.println("--------------------------------------");
+		System.out.println("You have exited the program.");
+		System.out.println("--------------------------------------");
+		System.exit(0);
 
 	}
 
