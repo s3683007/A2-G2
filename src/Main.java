@@ -1,18 +1,20 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 public class Main {
 
 	private Scanner scanner;
 	private ArrayList<User> users;
+	private ArrayList<Ticket> tickets;
 	private User loggedInUser;
 
 	public Main() {
 		scanner = new Scanner(System.in);
 		users = new ArrayList<>();
+		tickets = new ArrayList<>();
 
 		addTechnicians();
 		displayMainMenu();
@@ -26,10 +28,13 @@ public class Main {
 		User liam = new Technician("Liam Payne", "LP@cirno.com", "LP", "0400000003", 1);
 		User louis = new Technician("Louis Tomlinsonand", "LT@cirno.com", "LT", "0400000004", 2);
 		User zayn = new Technician("Zayn Malik", "ZM@cirno.com", "ZM", "0400000005", 2);
+		
+		// added following user for quicker testing
+		User matt = new Technician("1", "1", "1", "0400000006", 2);
 
 //		Add to array
-		Collections.addAll(users, harry, niall, liam, louis, zayn);
-	}
+		Collections.addAll(users, harry, niall, liam, louis, zayn, matt);
+	} 
 
 //	Main Menu
 	private void displayMainMenu() {
@@ -160,6 +165,9 @@ public class Main {
 		
 		this.loggedInUser = user;
 		System.out.printf("Logged in as %s\n", this.loggedInUser.getName());
+		
+		displayStaffMenu();
+		
 	}
 
 	private void createAccount() {
@@ -277,6 +285,69 @@ public class Main {
 		displayMainMenu();
 
 	}
+
+	
+//	Main Menu
+	private void displayStaffMenu() {
+
+//		Menu Options
+		System.out.println("--------------------------------------");
+		System.out.println("Staff Menu");
+		System.out.println("--------------------------------------");
+		System.out.println("0. Logout");
+		System.out.println("1. Submit new ticket");
+		System.out.println("2. Check existing ticket status");
+		System.out.println();
+
+//		Requires valid user input
+		System.out.print("Please select an option: ");
+		int menuInput = scanner.nextInt();
+
+		while (menuInput > 3 || menuInput < 0) {
+			System.out.print("Please select an option: ");
+			menuInput = scanner.nextInt();
+
+		}
+
+
+//		fixes Scanner line error
+		scanner.nextLine();
+
+		switch (menuInput) {
+		case 0:
+			displayMainMenu();
+			break;
+		case 1:
+			newTicket();
+			break;
+		case 2:
+			checkTickets();
+			break;
+		}
+
+	}
+	
+	
+	
+	private void checkTickets() {
+		Ticket.displayTicket();
+		displayStaffMenu();
+	}
+
+	private void newTicket() {
+		System.out.println("Please enter your problem discription: ");
+		String problemDiscription = scanner.nextLine();
+		
+		System.out.println("Please enter your problem severity:(1 for higher pripority or 2 for lower priority)");
+		int problemSeverity = scanner.nextInt();
+		scanner.nextLine();
+		
+		new Ticket(problemDiscription, problemSeverity);
+	
+		displayStaffMenu();
+		
+}
+	
 
 	public static void main(String[] args) {
 		new Main();
