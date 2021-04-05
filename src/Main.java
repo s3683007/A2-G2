@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class Main {
 
 	private Scanner scanner;
@@ -28,13 +29,13 @@ public class Main {
 		User liam = new Technician("Liam Payne", "LP@cirno.com", "LP", "0400000003", 1);
 		User louis = new Technician("Louis Tomlinsonand", "LT@cirno.com", "LT", "0400000004", 2);
 		User zayn = new Technician("Zayn Malik", "ZM@cirno.com", "ZM", "0400000005", 2);
-		
+
 		// added following user for quicker testing
 		User matt = new Technician("1", "1", "1", "0400000006", 2);
 
 //		Add to array
 		Collections.addAll(users, harry, niall, liam, louis, zayn, matt);
-	} 
+	}
 
 //	Main Menu
 	private void displayMainMenu() {
@@ -58,7 +59,6 @@ public class Main {
 			menuInput = scanner.nextInt();
 
 		}
-
 
 //		fixes Scanner line error
 		scanner.nextLine();
@@ -93,40 +93,38 @@ public class Main {
 		System.out.println("Login Selected");
 		System.out.println("--------------------------------------");
 
-		
 		User user = null;
 		boolean usernameCorrect = false;
-		
-		
+
 //		Asks for login email
 		do {
-		System.out.println("Please enter your email: ");
-		String email = scanner.nextLine();
+			System.out.println("Please enter your email: ");
+			String email = scanner.nextLine();
 
-		for (int counter = 0; counter < users.size(); counter++) {
+			for (int counter = 0; counter < users.size(); counter++) {
 
-			User currentUser = users.get(counter);
+				User currentUser = users.get(counter);
 
 //			If valid will ask for password
-			if (email.matches(currentUser.getEmail())) {
-				usernameCorrect = true;
-				user = users.get(counter);
+				if (email.matches(currentUser.getEmail())) {
+					usernameCorrect = true;
+					user = users.get(counter);
+				}
+
+			}
+
+			if (!usernameCorrect) {
+				System.out.println("Email incorrect.");
 			}
 
 		}
-		
-		if(!usernameCorrect) {
-			System.out.println("Email incorrect.");
-		}
-		
-	}
 
-	while (!usernameCorrect);
+		while (!usernameCorrect);
 //		Maximum 3 attempts allowed
-		int totalAttempts= 3;
+		int totalAttempts = 3;
 //		Ask for password
 		boolean passwordCorrect = false;
-		
+
 		do {
 			System.out.println("Please enter your password: ");
 			String password = scanner.nextLine();
@@ -151,23 +149,23 @@ public class Main {
 // 				Fixes next line issue
 				scanner.nextLine();
 				switch (maxAttemptMenu) {
-					case 1:
-						forgottenPassword();
-						break;
-					case 2:
-						exit();
-						break;
+				case 1:
+					forgottenPassword();
+					break;
+				case 2:
+					exit();
+					break;
 				}
 			}
 		}
-		
-		while(!passwordCorrect);
-		
+
+		while (!passwordCorrect);
+
 		this.loggedInUser = user;
 		System.out.printf("Logged in as %s\n", this.loggedInUser.getName());
-		
+
 		displayStaffMenu();
-		
+
 	}
 
 	private void createAccount() {
@@ -176,8 +174,8 @@ public class Main {
 		System.out.println("--------------------------------------");
 
 		String email;
-		boolean emailIsUnique  = false;
-		
+		boolean emailIsUnique = false;
+
 //		Asks user for unique email. Will repeat until user enters a unique email.
 		do {
 
@@ -197,8 +195,8 @@ public class Main {
 
 			if (usersFound > 0) {
 				System.out.println("Account with this email already exists.");
-			} 
-			
+			}
+
 			else {
 				emailIsUnique = true;
 			}
@@ -207,48 +205,45 @@ public class Main {
 
 		while (!emailIsUnique);
 
-		
 		System.out.println("Please enter your full name: ");
 		String name = scanner.nextLine();
 
 		System.out.println("Please enter your contact number: ");
 		String contactNumber = scanner.nextLine();
-		
-		
+
 //		Asks user to enter password
 		String password;
 		boolean validPassword = false;
 		do {
 
-		System.out.println("Please select a password: ");
-		password = scanner.nextLine();
-			
+			System.out.println("Please select a password: ");
+			password = scanner.nextLine();
+
 //		Regex for password. Required 1 Upper, 1 Lower, 1 Digit, 20 min characters.
-		String regex = "^.*(?=.{20,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).+";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(password);
-		
+			String regex = "^.*(?=.{20,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).+";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(password);
+
 //		if password is valid
-		if (matcher.find()) {
-			validPassword = true;
-		}
+			if (matcher.find()) {
+				validPassword = true;
+			}
 
-		else {
-			System.out.println(
-					"Password must contain 1 uppercase, 1 lowercase, 1 digit and must be 20 characters in length.");
-		}
+			else {
+				System.out.println(
+						"Password must contain 1 uppercase, 1 lowercase, 1 digit and must be 20 characters in length.");
+			}
 
-	} while (!validPassword);
-		
-		
+		} while (!validPassword);
+
 //	If details are correct create a staff object
-	User user = new Staff(name, email, password, contactNumber);
+		User user = new Staff(name, email, password, contactNumber);
 
 //	add to array
-	users.add(user);
-	
-	displayMainMenu();
-}
+		users.add(user);
+
+		displayMainMenu();
+	}
 
 	private void forgottenPassword() {
 		System.out.println("--------------------------------------");
@@ -286,7 +281,6 @@ public class Main {
 
 	}
 
-	
 //	Main Menu
 	private void displayStaffMenu() {
 
@@ -309,7 +303,6 @@ public class Main {
 
 		}
 
-
 //		fixes Scanner line error
 		scanner.nextLine();
 
@@ -326,28 +319,34 @@ public class Main {
 		}
 
 	}
-	
-	
-	
+
 	private void checkTickets() {
-		Ticket.displayTicket();
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+			System.out.println(currentTicket);
+
+		}
+
 		displayStaffMenu();
 	}
 
 	private void newTicket() {
 		System.out.println("Please enter your problem discription: ");
 		String problemDiscription = scanner.nextLine();
-		
+
 		System.out.println("Please enter your problem severity:(1 for higher pripority or 2 for lower priority)");
 		int problemSeverity = scanner.nextInt();
 		scanner.nextLine();
-		
-		new Ticket(problemDiscription, problemSeverity);
-	
+
+		Ticket ticket = new Ticket(problemDiscription, problemSeverity);
+
+		tickets.add(ticket);
+
 		displayStaffMenu();
-		
-}
-	
+
+	}
 
 	public static void main(String[] args) {
 		new Main();
