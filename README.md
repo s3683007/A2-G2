@@ -26,9 +26,17 @@ Fill out later
 1. Retrieve your password by selecting 3 into the console after viewing the main menu. 
 2. Enter the email you used to sign up for an account.
 
+#### New Ticket
+1. Follow Login section, steps 1-3 as a prerequisite.
+2. To submit a new ticket enter 1 into the console to view staff menu. 
+3. Enter your new problem discription
+4. Enter your problem severity (1 for high or 2 for low priority)
+
+
 ## Roadmap
 #### Current Version
 Version 1.0 - Main menu functionality with account creation ability, login and retrieval of password. 
+            - Staff menu functionality with ability, to log new tickets
 
 #### Future Versions
 - Manage tickets
@@ -46,23 +54,6 @@ Version 1.0 - Main menu functionality with account creation ability, login and r
 [MIT](https://choosealicense.com/licenses/mit/)
 
 
--------------------------------------------------------------------------------------------------------------------------------------------
 
 
-#### Version 1.1
-#### Current Version
-Version 1.1 - Staff menu functionality with  ability, to log new tickets
 
-
-#### Submit new ticket 
-*Prerequisites - Create an account and log into from the main menu. 
-
-1. Submit a new ticket by entering 1 into the console after viewing the staff menu. 
-2. 
-
-#### Future Versions
-- Assign tickets to technicians based on level and current assigned tickets
-- Assign a severity level to tickets
-- Ticket status'
-- Staff ticket management system
-- Ticket archive system
