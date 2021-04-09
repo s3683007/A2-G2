@@ -32,6 +32,11 @@ Fill out later
 3. Enter your new problem discription
 4. Enter your problem severity (1 for high or 2 for low priority)
 
+#### View All My Ticket
+1. Follow Login section, steps 1-3 as a prerequisite.
+2. To check all tickets enter 2 into the console to view staff menu. 
+3. List of all your tickets appears
+
 
 ## Roadmap
 #### Current Version
