@@ -25,9 +25,9 @@ public class Main {
 
 //		Create Technicians
 		User harry = new Technician("Harry Styles", "HS@cirno.com", "HS", "0400000001", 1);
-		User niall = new Technician("Niall Horanand", "NH@cirno.com", "NH", "0400000002", 1);
+		User niall = new Technician("Niall Horanan", "NH@cirno.com", "NH", "0400000002", 1);
 		User liam = new Technician("Liam Payne", "LP@cirno.com", "LP", "0400000003", 1);
-		User louis = new Technician("Louis Tomlinsonand", "LT@cirno.com", "LT", "0400000004", 2);
+		User louis = new Technician("Louis Tomlinson", "LT@cirno.com", "LT", "0400000004", 2);
 		User zayn = new Technician("Zayn Malik", "ZM@cirno.com", "ZM", "0400000005", 2);
 
 		// added following user for quicker testing
