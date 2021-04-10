@@ -344,8 +344,8 @@ public class Main {
 		Ticket ticket = new Ticket(problemDiscription, problemSeverity);
 
 		tickets.add(ticket);
-
 		System.out.println("Your ticket has been submitted, you can expect a response within 24 hours.");
+		
 		displayStaffMenu();
 
 	}
