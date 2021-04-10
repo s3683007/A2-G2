@@ -25,9 +25,9 @@ public class Main {
 
 //		Create Technicians
 		User harry = new Technician("Harry Styles", "HS@cirno.com", "HS", "0400000001", 1);
-		User niall = new Technician("Niall Horanand", "NH@cirno.com", "NH", "0400000002", 1);
+		User niall = new Technician("Niall Horanan", "NH@cirno.com", "NH", "0400000002", 1);
 		User liam = new Technician("Liam Payne", "LP@cirno.com", "LP", "0400000003", 1);
-		User louis = new Technician("Louis Tomlinsonand", "LT@cirno.com", "LT", "0400000004", 2);
+		User louis = new Technician("Louis Tomlinson", "LT@cirno.com", "LT", "0400000004", 2);
 		User zayn = new Technician("Zayn Malik", "ZM@cirno.com", "ZM", "0400000005", 2);
 
 		// added following user for quicker testing
@@ -241,6 +241,7 @@ public class Main {
 
 //	add to array
 		users.add(user);
+		System.out.println("You have successfully created an account.");
 
 		displayMainMenu();
 	}
@@ -333,10 +334,10 @@ public class Main {
 	}
 
 	private void newTicket() {
-		System.out.println("Please enter your problem discription: ");
+		System.out.println("Please enter your problem description: ");
 		String problemDiscription = scanner.nextLine();
 
-		System.out.println("Please enter your problem severity:(1 for higher pripority or 2 for lower priority)");
+		System.out.println("Please enter your problem severity:(1 for higher priority or 2 for lower priority)");
 		int problemSeverity = scanner.nextInt();
 		scanner.nextLine();
 
@@ -344,6 +345,7 @@ public class Main {
 
 		tickets.add(ticket);
 
+		System.out.println("Your ticket has been submitted, you can expect a response within 24 hours.");
 		displayStaffMenu();
 
 	}
