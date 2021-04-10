@@ -5,19 +5,35 @@
 Cinco is a multi level support ticket system that automatically assigns tickets, depending on their severity, to a technician who can then manage the assigned tickets within the system. A technician can login, create an account an retrieve forgotten passwords through the system. 
 
 ## Installation
+1. Navigate to https://mydesktop.rmit.edu.au/ in your browser.
+2. After logging in, select "Desktops" followed by "All Desktops".
+3. Select "RMIT Desktop".
 
-Fill out later 
+#### Using Github installation
+4. Open a browser within the RMIT Desktop and enter https://github.com/s3683007/A2-G2 into the address bar. 
+5. Select the "code" tab then "download zip".
+6. Right click the zip folder and choose "Extract all.."
+7. Extract the folder, by selecting browse, to the "H" drive.
+
+#### Assuming they have the file installed
+...............
+
+8. Navigate to the start menu and open Windows PowerShell
+9. Enter "cd H:\A2-G2-main\src" into the command line (without the quotation marks).
+10. Enter "javac --release 8 Main.java"
+11. Enter "java Main" to run the program.
+12. You have successfully entered the program. 
 
 ## Usage
 #### Account Creation 
-1. Create an account by entering 2 into the console after viewing the main menu. 
+1. Create an account by entering 2 into the console. 
 2. Enter your email address after the prompt.
 3. Enter your full name after the prompt.
 4. Enter your phone number after the prompt.
-5. Enter a unique password that is 20 characters minimum and contains all of the following: at least 1 uppercase letter, 1 lowercase letter and 1 number. 
+5. Enter a unique password that is 20 characters minimum and contains the following: at least 1 uppercase letter, 1 lowercase letter and 1 number. 
 
 #### Login
-1. Login to an existing account by entering 1 into the console after viewing the main menu. 
+1. Login to an existing account by entering 1 into the console. 
 2. Enter your email address after the prompt.
 3. Enter your password after the prompt.
 4. If you have forgotten your password then enter 1 to retrieve your password.
