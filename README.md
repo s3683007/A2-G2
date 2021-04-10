@@ -6,37 +6,42 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 
 ## Installation
 1. Navigate to https://mydesktop.rmit.edu.au/ in your browser.
-2. After logging in, select "Desktops" followed by "All Desktops".
-3. Select "RMIT Desktop".
+2. Login.
+3. Select "Browser Window".
+4. Select "Desktops" followed by "All Desktops".
+5. Select "RMIT Desktop".
 
 #### Using Github installation
-4. Open a browser within the RMIT Desktop and enter https://github.com/s3683007/A2-G2 into the address bar. 
-5. Select the "code" tab then "download zip".
-6. Right click the zip folder and choose "Extract all.."
-7. Extract the folder, by selecting browse, to the "H" drive.
+4. Open Firefox and enter https://github.com/s3683007/A2-G2 into the address bar. 
+5. Select the green "code" tab then "download zip".
+6. Navigate to the downloaded zip folder.
+7. Right click the zip folder and choose "Extract all.."
+8. Extract the folder, by selecting browse, to the "H" drive.
+
+#### Assuming they need to install from assignment submission website
+
 
 #### Assuming they have the file installed
-...............
-
-8. Navigate to the start menu and open Windows PowerShell
-9. Enter "cd H:\A2-G2-main\src" into the command line (without the quotation marks).
-10. Enter "javac --release 8 Main.java"
-11. Enter "java Main" to run the program.
-12. You have successfully entered the program. 
+8. Navigate to the start menu and type "cmd".
+9. Open the program called "Command Prompt".
+10. Enter "cd H:\A2-G2-main\src" into the command line (without the quotation marks).
+11. Enter "javac --release 8 Main.java"
+12. Enter "java Main" to run the program.
+13. You have successfully entered the program. 
 
 ## Usage
+#### Login
+1. Login to an existing account by entering 1 into the console. 
+2. Enter your email address after the prompt.
+3. Enter your password after the prompt.
+4. If you have forgotten your password then enter 1 to retrieve your password.
+
 #### Account Creation 
 1. Create an account by entering 2 into the console. 
 2. Enter your email address after the prompt.
 3. Enter your full name after the prompt.
 4. Enter your phone number after the prompt.
 5. Enter a unique password that is 20 characters minimum and contains the following: at least 1 uppercase letter, 1 lowercase letter and 1 number. 
-
-#### Login
-1. Login to an existing account by entering 1 into the console. 
-2. Enter your email address after the prompt.
-3. Enter your password after the prompt.
-4. If you have forgotten your password then enter 1 to retrieve your password.
 
 #### Forgotten Password
 1. Retrieve your password by selecting 3 into the console after viewing the main menu. 
@@ -66,6 +71,9 @@ Version 1.0 - Main menu functionality with account creation ability, login and r
 - Ticket status'
 - Staff ticket management system
 - Ticket archive system
+
+## F.A.Q.
+
 
  
 ## Authors
