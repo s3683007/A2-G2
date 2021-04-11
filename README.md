@@ -10,18 +10,8 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 3. Select "Browser Window".
 4. Select "Desktops" followed by "All Desktops".
 5. Select "RMIT Desktop".
-
-#### Using Github installation
-4. Open Firefox and enter https://github.com/s3683007/A2-G2 into the address bar. 
-5. Select the green "code" tab then "download zip".
-6. Navigate to the downloaded zip folder.
-7. Right click the zip folder and choose "Extract all.."
-8. Extract the folder, by selecting browse, to the "H" drive.
-
-#### Assuming they need to install from assignment submission website
-
-
-#### Assuming they have the file installed
+6. Download the zipped folder via the submission website.
+7. Extract the zipped folder to the "H" drive.
 8. Navigate to the start menu and type "cmd".
 9. Open the program called "Command Prompt".
 10. Enter "cd H:\A2-G2-main\src" into the command line (without the quotation marks).
@@ -73,16 +63,19 @@ Version 1.0 - Main menu functionality with account creation ability, login and r
 - Ticket archive system
 
 ## F.A.Q.
+Q. H:\A2-G2-main\src does not exist when I run the command in step 10.
+A. If the command does not work, ensure that you have extracted the zipped folder correctly to the H drive. Then locate the A2-G2-main\src and copy the url in the address bar, insert that location into the command so it becomes "cd (your folder location)". 
 
+Q. I need an alternative download
+A. Follow the steps below to install via GitHub.
+            1. Open Firefox and enter https://github.com/s3683007/A2-G2 into the address bar. 
+            2. Select the green "code" tab then "download zip".
+            3. Navigate to the downloaded zip folder.
+            4. Right click the zip folder and choose "Extract all.."
+            5. Extract the folder, by selecting browse, to the "H" drive.
 
- 
 ## Authors
 [Rahin Farook](https://github.com/RahinF), [Alanna Hembrow](https://github.com/s3683007), and [Matthew Hughes](https://github.com/s3816641)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
-
-
-
-
-
