@@ -1,6 +1,4 @@
-// WIP
-
-# Cinco
+# Cinco Version 1.0
 
 Cinco is a multi level support ticket system that automatically assigns tickets, depending on their severity, to a technician who can then manage the assigned tickets within the system. A technician can login, create an account an retrieve forgotten passwords through the system. 
 
