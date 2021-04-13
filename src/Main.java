@@ -17,8 +17,27 @@ public class Main {
 		users = new ArrayList<>();
 		tickets = new ArrayList<>();
 
+		// Testing
+		fastTest();
+
 		addTechnicians();
 		displayMainMenu();
+	}
+
+	private void fastTest() {
+		User test = new Staff("Test User", "2", "2", "0400000001");
+		users.add(test);
+		this.loggedInUser = test;
+
+		User diffUser = new Staff("diffUser", "3", "3", "0400000001");
+		users.add(diffUser);
+
+		Ticket ticket1 = new Ticket("test 1", 1, test);
+		Ticket ticket2 = new Ticket("test 2", 2, test);
+		Ticket ticket3 = new Ticket("diff user", 2, diffUser);
+
+		Collections.addAll(tickets, ticket1, ticket2, ticket3);
+
 	}
 
 	private void addTechnicians() {
@@ -162,9 +181,25 @@ public class Main {
 		while (!passwordCorrect);
 
 		this.loggedInUser = user;
+
+		System.out.println("--------------------------------------");
 		System.out.printf("Logged in as %s\n", this.loggedInUser.getName());
 
-		displayStaffMenu();
+//		redirect user based on user type (staff or tech)
+		if (this.loggedInUser instanceof Staff) {
+			displayStaffMenu();
+		}
+
+		else if (this.loggedInUser instanceof Technician) {
+			displayTechnicianMenu();
+		}
+
+	}
+
+	private void displayTechnicianMenu() {
+		System.out.println("--------------------------------------");
+		System.out.println("Technician Menu");
+		System.out.println("--------------------------------------");
 
 	}
 
@@ -236,10 +271,9 @@ public class Main {
 
 		} while (!validPassword);
 
-//	If details are correct create a staff object
+//	If details are correct create a staff user
 		User user = new Staff(name, email, password, contactNumber);
 
-//	add to array
 		users.add(user);
 		System.out.println("You have successfully created an account.");
 
@@ -326,7 +360,10 @@ public class Main {
 		for (int counter = 0; counter < tickets.size(); counter++) {
 
 			Ticket currentTicket = tickets.get(counter);
-			System.out.println(currentTicket);
+
+			if (currentTicket.getIssuedBy() == this.loggedInUser) {
+				System.out.println(currentTicket);
+			}
 
 		}
 
@@ -341,11 +378,11 @@ public class Main {
 		int problemSeverity = scanner.nextInt();
 		scanner.nextLine();
 
-		Ticket ticket = new Ticket(problemDiscription, problemSeverity);
+		Ticket ticket = new Ticket(problemDiscription, problemSeverity, this.loggedInUser);
 
 		tickets.add(ticket);
 		System.out.println("Your ticket has been submitted, you can expect a response within 24 hours.");
-		
+
 		displayStaffMenu();
 
 	}
