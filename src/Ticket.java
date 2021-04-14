@@ -1,12 +1,16 @@
 
 public class Ticket {
 
-	private static String problemDiscription;
-	private static int problemSeverity;
+	private String problemDiscription;
+	private int problemSeverity;
+	private String status;
+	private User issuedBy;
 
-	public Ticket(String problemDiscription, int problemSeverity) {
+	public Ticket(String problemDiscription, int problemSeverity, User issuedBy) {
 		this.problemDiscription = problemDiscription;
 		this.problemSeverity = problemSeverity;
+		this.status = "Open";
+		this.issuedBy = issuedBy;
 	}
 
 //	public void displayTicket() {
@@ -16,18 +20,39 @@ public class Ticket {
 //		System.out.println();
 //	}
 
-	public String problemDiscription() {
+	public String getProblemDiscription() {
 		return problemDiscription;
 	}
 
-	public int problemSeverity() {
+	public void setProblemDiscription(String problemDiscription) {
+		this.problemDiscription = problemDiscription;
+	}
+
+	public int getProblemSeverity() {
 		return problemSeverity;
+	}
+
+	public void setProblemSeverity(int problemSeverity) {
+		this.problemSeverity = problemSeverity;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 //For testing
 	@Override
 	public String toString() {
-		return "\nProblem Discription =" + problemDiscription + "\nProblem Severity = " + problemSeverity+ "\n";
+		return "\nProblem Discription =" + problemDiscription + "\nProblem Severity = " + problemSeverity
+				+ "\nIssued By= " + this.issuedBy.getName();
 	}
-	
+
+	public User getIssuedBy() {
+		return issuedBy;
+	}
+
 }
