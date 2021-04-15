@@ -1,40 +1,35 @@
 
 public class Ticket {
 
-	private String problemDiscription;
+	private String problemDescription;
 	private int problemSeverity;
 	private String status;
 	private User issuedBy;
+	private User technician;
 
-	public Ticket(String problemDiscription, int problemSeverity, User issuedBy) {
-		this.problemDiscription = problemDiscription;
+	public Ticket(String problemDescription, int problemSeverity, User issuedBy, User technician) {
+		this.problemDescription = problemDescription;
 		this.problemSeverity = problemSeverity;
 		this.status = "Open";
 		this.issuedBy = issuedBy;
+		this.technician = technician;
 	}
 
-//	public void displayTicket() {
-//		System.out.println();
-//		System.out.println("Ticket Description: " + problemDiscription);
-//		System.out.println("Ticket Severity Stated: " + problemSeverity);
-//		System.out.println();
-//	}
-
-	public String getProblemDiscription() {
-		return problemDiscription;
+	public String getProblemDescription() {
+		return problemDescription;
 	}
 
-	public void setProblemDiscription(String problemDiscription) {
-		this.problemDiscription = problemDiscription;
+	public void setProblemDescription(String problemDescription) {
+		this.problemDescription = problemDescription;
 	}
 
 	public int getProblemSeverity() {
 		return problemSeverity;
 	}
 
-	public void setProblemSeverity(int problemSeverity) {
-		this.problemSeverity = problemSeverity;
-	}
+//	public void setProblemSeverity(int problemSeverity) {
+//		this.problemSeverity = problemSeverity;
+//	}
 
 	public String getStatus() {
 		return status;
@@ -44,15 +39,18 @@ public class Ticket {
 		this.status = status;
 	}
 
-//For testing
 	@Override
 	public String toString() {
-		return "\nProblem Discription =" + problemDiscription + "\nProblem Severity = " + problemSeverity
-				+ "\nIssued By= " + this.issuedBy.getName();
+		return "Ticket [problemDescription=" + problemDescription + ", problemSeverity=" + problemSeverity + ", status="
+				+ status + ", issuedBy=" + issuedBy + ", technician=" + technician + "]";
 	}
 
 	public User getIssuedBy() {
 		return issuedBy;
+	}
+
+	public User getTechnician() {
+		return this.technician;
 	}
 
 }

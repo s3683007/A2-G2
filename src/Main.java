@@ -1,6 +1,10 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,43 +21,52 @@ public class Main {
 		users = new ArrayList<>();
 		tickets = new ArrayList<>();
 
-		// Testing
+		// for testing - delete when done
 		fastTest();
 
 		addTechnicians();
 		displayMainMenu();
 	}
 
+	
+	// for testing - delete when done
 	private void fastTest() {
-		User test = new Staff("Test User", "2", "2", "0400000001");
-		users.add(test);
-		this.loggedInUser = test;
+		
+		addTechnicians();
+		
+//		logs staff user in - skips main menu
+		User staffUser = new Staff("Staff User", "1", "1", "0400000001");
+		users.add(staffUser);
+		this.loggedInUser = staffUser;
+		
+		
+//		logs tech user in - skips main menu - uncomment to use
+		User techUser = new Technician("Technician", "2", "2", "0400000006", 2);
+//		users.add(techUser);
+//		this.loggedInUser = techUser;
+		
+		
+//		go to the right user menu
+		if (this.loggedInUser instanceof Staff) {
+			displayStaffMenu();
+		}
 
-		User diffUser = new Staff("diffUser", "3", "3", "0400000001");
-		users.add(diffUser);
-
-		Ticket ticket1 = new Ticket("test 1", 1, test);
-		Ticket ticket2 = new Ticket("test 2", 2, test);
-		Ticket ticket3 = new Ticket("diff user", 2, diffUser);
-
-		Collections.addAll(tickets, ticket1, ticket2, ticket3);
+		else if (this.loggedInUser instanceof Technician) {
+			displayTechnicianMenu();
+		}
 
 	}
 
+//	Create and add Technicians to the system
 	private void addTechnicians() {
 
-//		Create Technicians
 		User harry = new Technician("Harry Styles", "HS@cirno.com", "HS", "0400000001", 1);
 		User niall = new Technician("Niall Horanan", "NH@cirno.com", "NH", "0400000002", 1);
 		User liam = new Technician("Liam Payne", "LP@cirno.com", "LP", "0400000003", 1);
 		User louis = new Technician("Louis Tomlinson", "LT@cirno.com", "LT", "0400000004", 2);
 		User zayn = new Technician("Zayn Malik", "ZM@cirno.com", "ZM", "0400000005", 2);
 
-		// added following user for quicker testing
-		User matt = new Technician("1", "1", "1", "0400000006", 2);
-
-//		Add to array
-		Collections.addAll(users, harry, niall, liam, louis, zayn, matt);
+		Collections.addAll(users, harry, niall, liam, louis, zayn);
 	}
 
 //	Main Menu
@@ -124,7 +137,7 @@ public class Main {
 
 				User currentUser = users.get(counter);
 
-//			If valid will ask for password
+//			If email is valid asks user for password
 				if (email.matches(currentUser.getEmail())) {
 					usernameCorrect = true;
 					user = users.get(counter);
@@ -362,7 +375,11 @@ public class Main {
 			Ticket currentTicket = tickets.get(counter);
 
 			if (currentTicket.getIssuedBy() == this.loggedInUser) {
-				System.out.println(currentTicket);
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Status: %s\n", currentTicket.getStatus());
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
 			}
 
 		}
@@ -372,18 +389,105 @@ public class Main {
 
 	private void newTicket() {
 		System.out.println("Please enter your problem description: ");
-		String problemDiscription = scanner.nextLine();
+		String problemDescription = scanner.nextLine();
 
 		System.out.println("Please enter your problem severity:(1 for higher priority or 2 for lower priority)");
 		int problemSeverity = scanner.nextInt();
 		scanner.nextLine();
 
-		Ticket ticket = new Ticket(problemDiscription, problemSeverity, this.loggedInUser);
+		User assignedTechnician = assignTechnician(problemSeverity);
+
+		Ticket ticket = new Ticket(problemDescription, problemSeverity, this.loggedInUser, assignedTechnician);
 
 		tickets.add(ticket);
 		System.out.println("Your ticket has been submitted, you can expect a response within 24 hours.");
 
 		displayStaffMenu();
+
+	}
+
+	private User assignTechnician(int problemSeverity) {
+
+//		create list of techs with same severity level
+		Map<User, Integer> technicians = createTechnicianList(problemSeverity);
+
+//		count tickets of techs
+		Map<User, Integer> technicianTicketCount = countTickets(technicians);
+
+//		find lowest count
+		int minCount = Integer.MAX_VALUE;
+		for (Entry<User, Integer> entry : technicianTicketCount.entrySet()) {
+
+			if (entry.getValue() < minCount) {
+				minCount = entry.getValue();
+			}
+		}
+
+//		find all techs with lowest count 
+		ArrayList<User> techs = new ArrayList<>();
+
+		for (Entry<User, Integer> entry : technicians.entrySet()) {
+
+			if (entry.getValue() == minCount) {
+				techs.add(entry.getKey());
+			}
+		}
+
+		User assignedUser = null;
+
+//		if more than 1 tech with lowest count
+		if (techs.size() > 1) {
+//			random selection
+			Random random = new Random();
+			assignedUser = techs.get(random.nextInt(techs.size()));
+		} 
+		
+		else {
+//			assign single tech
+			assignedUser = techs.get(0);
+		}
+		
+		return assignedUser;
+	}
+
+	
+//	count tickets of user
+	private Map<User, Integer> countTickets(Map<User, Integer> technicians) {
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			for (Entry<User, Integer> entry : technicians.entrySet()) {
+
+				if (tickets.get(counter).getTechnician().getEmail().equals(entry.getKey().getEmail())) {
+
+					technicians.put(entry.getKey(), entry.getValue() + 1);
+				}
+			}
+		}
+		return technicians;
+	}
+
+//	create map with technicians and default ticket count of 0
+//	with tech level equal to severity
+	private Map<User, Integer> createTechnicianList(int problemSeverity) {
+
+//		find tech with same service level as issue
+		Map<User, Integer> technicians = new HashMap<>();
+		for (int counter = 0; counter < users.size(); counter++) {
+
+			User currentUser = users.get(counter);
+
+			if (currentUser instanceof Technician) {
+
+				Technician technician = (Technician) currentUser;
+
+				if (technician.getTechnicianLevel() == problemSeverity) {
+					technicians.put(technician, 0);
+				}
+			}
+		}
+
+		return technicians;
 
 	}
 
