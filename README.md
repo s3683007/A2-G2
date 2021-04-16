@@ -61,11 +61,9 @@ Version 1.0 - Main menu functionality with account creation ability, login and r
 
 ## F.A.Q.
 Q. H:\Sprint1-A2G2\A2-G2-main\src does not exist when I run the command in step 10.
-
 A. If the command does not work, ensure that you have extracted the zipped folder correctly to the H drive. Then locate the A2-G2-main\src and copy the url in the address bar, insert that location into the command so it becomes "cd (your folder location)". 
 
 Q. I need an alternative download
-
 A. Follow the steps below to install via GitHub.
             1. Open Firefox and enter https://github.com/s3683007/A2-G2 into the address bar. 
             2. Select the green "code" tab then "download zip".
@@ -74,7 +72,6 @@ A. Follow the steps below to install via GitHub.
             5. Extract the folder, by selecting browse, to the "H" drive.
 
 Q. I can not find command prompt
-
 A. Instead you can use Windows Powershell which is located within the start menu and can be found when scrolling down the menu.
 
 ## Authors
