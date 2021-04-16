@@ -8,14 +8,13 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 3. Select "Browser Window".
 4. Select "Desktops" followed by "All Desktops".
 5. Select "RMIT Desktop".
-6. Download the zipped folder via the submission website.
-7. Extract the zipped folder to the "H" drive.
-8. Navigate to the start menu and type "cmd".
-9. Open the program called "Command Prompt".
-10. Enter "cd H:\A2-G2-main\src" into the command line (without the quotation marks).
-11. Enter "javac --release 8 Main.java"
-12. Enter "java Main" to run the program.
-13. You have successfully entered the program. 
+6. Extract the zipped folder to the "H" drive.
+7. Navigate to the start menu and type "cmd".
+8. Open the program called "Command Prompt".
+9. Enter "cd H:\Sprint1-A2G2\A2-G2-main\src" into the command line (without the quotation marks).
+10. Enter "javac --release 8 Main.java"
+11. Enter "java Main" to run the program.
+12. You have successfully entered the program. 
 
 ## Usage
 #### Login
@@ -61,7 +60,7 @@ Version 1.0 - Main menu functionality with account creation ability, login and r
 - Ticket archive system
 
 ## F.A.Q.
-Q. H:\A2-G2-main\src does not exist when I run the command in step 10.
+Q. H:\Sprint1-A2G2\A2-G2-main\src does not exist when I run the command in step 10.
 A. If the command does not work, ensure that you have extracted the zipped folder correctly to the H drive. Then locate the A2-G2-main\src and copy the url in the address bar, insert that location into the command so it becomes "cd (your folder location)". 
 
 Q. I need an alternative download
@@ -71,6 +70,9 @@ A. Follow the steps below to install via GitHub.
             3. Navigate to the downloaded zip folder.
             4. Right click the zip folder and choose "Extract all.."
             5. Extract the folder, by selecting browse, to the "H" drive.
+
+Q. I can not find command prompt
+A. Instead you can use Windows Powershell which is located within the start menu and can be found when scrolling down the menu.
 
 ## Authors
 [Rahin Farook](https://github.com/RahinF), [Alanna Hembrow](https://github.com/s3683007), and [Matthew Hughes](https://github.com/s3816641)
