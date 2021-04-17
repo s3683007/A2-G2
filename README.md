@@ -1,4 +1,4 @@
-# Cinco Version 1.0
+# Cinco Version 2.0
 
 Cinco is a multi level support ticket system that automatically assigns tickets, depending on their severity, to a technician who can then manage the assigned tickets within the system. A technician can login, create an account an retrieve forgotten passwords through the system. 
 
@@ -34,29 +34,28 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 1. Retrieve your password by selecting 3 into the console after viewing the main menu. 
 2. Enter the email you used to sign up for an account.
 
-#### New Ticket
+#### Create a New Ticket
 1. Follow Login section, steps 1-3 as a prerequisite.
 2. To submit a new ticket enter 1 into the console to view staff menu. 
 3. Enter your new problem discription
-4. Enter your problem severity (1 for high or 2 for low priority)
+4. Enter your problem severity (1 for high, 2 for medium and 3 for low).
 
-#### View All My Ticket
+#### View Staff Tickets
 1. Follow Login section, steps 1-3 as a prerequisite.
-2. To check all tickets enter 2 into the console to view staff menu. 
-3. List of all your tickets appears
-
+2. Enter 2 in the staff menu to view open tickets.
 
 ## Roadmap
-#### Current Version
+#### Current Versions
+Version 2.0 - Assign tickets to technicians based on level and current assigned tickets
+            - Assign a severity level to tickets
+            - Ticket status'
+            - Staff ticket management system
+
 Version 1.0 - Main menu functionality with account creation ability, login and retrieval of password. 
             - Staff menu functionality with ability, to log new tickets
 
 #### Future Versions
 - Manage tickets
-- Assign tickets to technicians based on level and current assigned tickets
-- Assign a severity level to tickets
-- Ticket status'
-- Staff ticket management system
 - Ticket archive system
 
 ## F.A.Q.
