@@ -211,8 +211,8 @@ public class Main {
 		System.out.println("Technician Menu");
 		System.out.println("--------------------------------------");
 		System.out.println("0. Logout");
-		System.out.println("1. See all tickets assigned to me");
-		System.out.println("2. See all tickets assigned to everyone");
+		System.out.println("1. View Assigned Tickets");
+		System.out.println("2. View All Tickets");
 		System.out.println();
 
 //		Requires valid user input
