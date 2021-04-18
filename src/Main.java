@@ -31,17 +31,17 @@ public class Main {
 	// for testing - delete when done
 	private void fastTest() {
 
-		addTechnicians();
+//		addTechnicians();
 
 //		logs staff user in - skips main menu
 		User staffUser = new Staff("Staff User", "1", "1", "0400000001");
 		users.add(staffUser);
-		this.loggedInUser = staffUser;
+		// this.loggedInUser = staffUser;
 
 //		logs tech user in - skips main menu - uncomment to use
 		User techUser = new Technician("Technician", "2", "2", "0400000006", 2);
-//		users.add(techUser);
-//		this.loggedInUser = techUser;
+		users.add(techUser);
+		this.loggedInUser = techUser;
 
 //		go to the right user menu
 		if (this.loggedInUser instanceof Staff) {
@@ -100,7 +100,7 @@ public class Main {
 			login();
 			break;
 		case 2:
-			createAccount();
+			createStaffAccount();
 			break;
 		case 3:
 			forgottenPassword();
@@ -210,10 +210,39 @@ public class Main {
 		System.out.println("--------------------------------------");
 		System.out.println("Technician Menu");
 		System.out.println("--------------------------------------");
+		System.out.println("0. Logout");
+		System.out.println("1. See all tickets assigned to me");
+		System.out.println("2. See all tickets assigned to everyone");
+		System.out.println();
+
+//		Requires valid user input
+		System.out.print("Please select an option: ");
+		int menuInput = scanner.nextInt();
+
+		while (menuInput > 3 || menuInput < 0) {
+			System.out.print("Please select an option: ");
+			menuInput = scanner.nextInt();
+
+		}
+
+//		fixes Scanner line error
+		scanner.nextLine();
+
+		switch (menuInput) {
+		case 0:
+			displayMainMenu();
+			break;
+		case 1:
+			checkTicketsAsTech();
+			break;
+		case 2:
+			checkTicketsTech();
+			break;
+		}
 
 	}
 
-	private void createAccount() {
+	private void createStaffAccount() {
 		System.out.println("--------------------------------------");
 		System.out.println("Create Account Selected");
 		System.out.println("--------------------------------------");
@@ -359,13 +388,13 @@ public class Main {
 			newTicket();
 			break;
 		case 2:
-			checkTickets();
+			checkTicketsAsStaff();
 			break;
 		}
 
 	}
 
-	private void checkTickets() {
+	private void checkTicketsAsStaff() {
 
 		for (int counter = 0; counter < tickets.size(); counter++) {
 
@@ -378,11 +407,48 @@ public class Main {
 				System.out.printf("Status: %s\n", currentTicket.getStatus());
 				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
 				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				System.out.printf("\n");
 			}
 
 		}
 
 		displayStaffMenu();
+	}
+
+	private void checkTicketsAsTech() {
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			if (currentTicket.getIssuedBy() == this.loggedInUser) {
+				System.out.println();
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Status: %s\n", currentTicket.getStatus());
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				System.out.printf("\n");
+			}
+		}
+		displayTechnicianMenu();
+	}
+
+	private void checkTicketsTech() {
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+			System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+			System.out.printf("Status: %s\n", currentTicket.getStatus());
+			System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+			System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+			System.out.printf("\n");
+			System.out.printf("\n");
+		}
+
+		displayTechnicianMenu();
 	}
 
 	private void newTicket() {
