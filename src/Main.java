@@ -21,38 +21,10 @@ public class Main {
 		users = new ArrayList<>();
 		tickets = new ArrayList<>();
 
-		// for testing - delete when done
-		fastTest();
-
 		addTechnicians();
 		displayMainMenu();
 	}
 
-	// for testing - delete when done
-	private void fastTest() {
-
-//		addTechnicians();
-
-//		logs staff user in - skips main menu
-		User staffUser = new Staff("Staff User", "1", "1", "0400000001");
-		users.add(staffUser);
-		// this.loggedInUser = staffUser;
-
-//		logs tech user in - skips main menu - uncomment to use
-		User techUser = new Technician("Technician", "2", "2", "0400000006", 2);
-		users.add(techUser);
-		this.loggedInUser = techUser;
-
-//		go to the right user menu
-		if (this.loggedInUser instanceof Staff) {
-			displayStaffMenu();
-		}
-
-		else if (this.loggedInUser instanceof Technician) {
-			displayTechnicianMenu();
-		}
-
-	}
 
 //	Create and add Technicians to the system
 	private void addTechnicians() {
@@ -77,7 +49,7 @@ public class Main {
 		System.out.println("1. Login");
 		System.out.println("2. Create Account");
 		System.out.println("3. Forgotten Password");
-		System.out.println();
+		System.out.println("");
 
 //		Requires valid user input
 		System.out.print("Please select an option: ");
@@ -211,15 +183,18 @@ public class Main {
 		System.out.println("Technician Menu");
 		System.out.println("--------------------------------------");
 		System.out.println("0. Logout");
-		System.out.println("1. See all tickets assigned to me");
-		System.out.println("2. See all tickets assigned to everyone");
+		System.out.println("1. View Assigned Tickets");
+		System.out.println("2. Change Severity");
+		System.out.println("3. Change Status");
+		System.out.println("4. View all Tickets");
+		System.out.println("5. Re-open Ticket");
 		System.out.println();
 
 //		Requires valid user input
 		System.out.print("Please select an option: ");
 		int menuInput = scanner.nextInt();
 
-		while (menuInput > 3 || menuInput < 0) {
+		while (menuInput > 4 || menuInput < 0) {
 			System.out.print("Please select an option: ");
 			menuInput = scanner.nextInt();
 
@@ -232,14 +207,294 @@ public class Main {
 		case 0:
 			displayMainMenu();
 			break;
+
 		case 1:
 			checkTicketsAsTech();
 			break;
+
 		case 2:
+			changeSeverity();
+			break;
+
+		case 3:
+			changeStatus();
+			break;
+
+		case 4:
 			checkTicketsTech();
 			break;
+
+		case 5:
+			reopenTicket();
+			break;
+
 		}
 
+	}
+
+	private void reopenTicket() {
+
+
+		ArrayList<Ticket> tempTickets = new ArrayList<>();
+
+
+		int ticketCounter = 0;
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+
+			if (
+					currentTicket.getStatus().equals("Closed & Resolved") ||
+							currentTicket.getStatus().equals("Closed & Unresolved"))
+
+			{
+				System.out.println();
+				System.out.println("--------------------------------------");
+				System.out.printf("Ticket Number %s\n", ticketCounter);
+				System.out.println("--------------------------------------");
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Status: %s\n", currentTicket.getStatus());
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				tempTickets.add(currentTicket);
+				ticketCounter++;
+			}
+
+		}
+
+		if(tempTickets.isEmpty()) {
+			System.out.println("There are no tickets that can be reopened at this time.");
+			displayTechnicianMenu();
+		}
+
+		System.out.println();
+		System.out.println("--------------------------------------");
+		System.out.print("Please select a ticket: ");
+		int ticketSelected = scanner.nextInt();
+
+		scanner.nextLine();
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			if (tempTickets.get(ticketSelected).equals(currentTicket)) {
+				System.out.println("--------------------------------------");
+				System.out.println("Ticket Selected");
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Status: %s\n", currentTicket.getStatus());
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				System.out.println("--------------------------------------");
+
+
+				System.out.printf("Re-open Ticket?\n");
+				System.out.println("--------------------------------------");
+				System.out.println("1. Yes");
+				System.out.println("2. No");
+				System.out.println("3. Exit");
+
+				int reopenConfirmation = scanner.nextInt();
+
+				scanner.nextLine();
+
+				switch (reopenConfirmation) {
+					case 1:
+						currentTicket.setStatus("Open");
+						break;
+
+					case 2:
+						reopenTicket();
+						break;
+
+					case 3:
+						displayTechnicianMenu();
+						break;
+
+				}
+
+			}
+		}
+
+		displayTechnicianMenu();
+
+	}
+
+	private void changeStatus() {
+
+
+		ArrayList<Ticket> tempTickets = new ArrayList<>();
+
+
+		int ticketCounter = 0;
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+
+			Ticket currentTicket = tickets.get(counter);
+
+
+			if (
+					currentTicket.getTechnician() == this.loggedInUser &&
+							currentTicket.getStatus().equals("Open"))
+
+			{
+				System.out.println();
+				System.out.println("--------------------------------------");
+				System.out.printf("Ticket Number %s\n", ticketCounter);
+				System.out.println("--------------------------------------");
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Issued by: %s", currentTicket.getIssuedBy().getName());
+				tempTickets.add(currentTicket);
+				ticketCounter++;
+			}
+
+			if(tempTickets.isEmpty()) {
+				System.out.println("There are no tickets in the system.");
+				displayTechnicianMenu();
+			}
+
+		}
+
+		System.out.println();
+		System.out.println("--------------------------------------");
+		System.out.print("Please select a ticket: ");
+		int ticketSelected = scanner.nextInt();
+
+		scanner.nextLine();
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			if(tempTickets.get(ticketSelected).equals(currentTicket)) {
+				System.out.println("--------------------------------------");
+				System.out.println("Ticket Selected");
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Status: %s\n", currentTicket.getStatus());
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				System.out.println("--------------------------------------");
+				System.out.println();
+
+				System.out.println("Change status from Open to");
+				System.out.println("1. Closed & Resolved");
+				System.out.println("2. Closed & Unresolved");
+				System.out.println("3. Exit");
+
+				int statusSelected = scanner.nextInt();
+
+				scanner.nextLine();
+
+				switch (statusSelected) {
+					case 1:
+						currentTicket.setStatus("Closed & Resolved");
+						break;
+
+					case 2:
+						currentTicket.setStatus("Closed & Unresolved");
+						break;
+
+					case 3:
+						displayTechnicianMenu();
+						break;
+
+				}
+
+			}
+		}
+		displayTechnicianMenu();
+
+	}
+
+	private void changeSeverity() {
+		ArrayList<Ticket> tempTickets = new ArrayList<>();
+
+		int ticketCounter = 0;
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			if (currentTicket.getTechnician() == this.loggedInUser && currentTicket.getStatus().equals("Open"))
+
+			{
+				System.out.println();
+				System.out.println("--------------------------------------");
+				System.out.printf("Ticket Number %s\n", ticketCounter);
+				System.out.println("--------------------------------------");
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Issued by: %s", currentTicket.getIssuedBy().getName());
+				tempTickets.add(currentTicket);
+				ticketCounter++;
+			}
+
+			if(tempTickets.isEmpty()) {
+				System.out.println("There are no tickets in the system.");
+				displayTechnicianMenu();
+			}
+
+		}
+
+		System.out.println();
+		System.out.println("--------------------------------------");
+		System.out.print("Please select a ticket: ");
+		int ticketSelected = scanner.nextInt();
+
+		scanner.nextLine();
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			if (tempTickets.get(ticketSelected).equals(currentTicket)) {
+				System.out.println("--------------------------------------");
+				System.out.println("Ticket Selected");
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Status: %s\n", currentTicket.getStatus());
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				System.out.println("--------------------------------------");
+
+
+				System.out.printf("Current Severity: %s \n", currentTicket.getProblemSeverity());
+				System.out.println("--------------------------------------");
+				System.out.println("1. Low");
+				System.out.println("2. Medium");
+				System.out.println("3. High");
+				System.out.println("4. Exit");
+
+				int severitySelected = scanner.nextInt();
+
+				scanner.nextLine();
+
+				switch (severitySelected) {
+					case 1:
+						currentTicket.setProblemSeverity("Low");
+						break;
+
+					case 2:
+						currentTicket.setProblemSeverity("Medium");
+						break;
+
+					case 3:
+						currentTicket.setProblemSeverity("High");
+						break;
+
+					case 4:
+						displayTechnicianMenu();
+						break;
+
+				}
+
+			}
+		}
+		displayTechnicianMenu();
 	}
 
 	private void createStaffAccount() {
@@ -415,13 +670,13 @@ public class Main {
 		displayStaffMenu();
 	}
 
-	private void checkTicketsAsTech() {
+	 private void checkTicketsAsTech() {
 
 		for (int counter = 0; counter < tickets.size(); counter++) {
 
 			Ticket currentTicket = tickets.get(counter);
 
-			if (currentTicket.getIssuedBy() == this.loggedInUser) {
+			if (currentTicket.getTechnician() == this.loggedInUser) {
 				System.out.println();
 				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
 				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
@@ -433,6 +688,7 @@ public class Main {
 		}
 		displayTechnicianMenu();
 	}
+
 
 	private void checkTicketsTech() {
 		for (int counter = 0; counter < tickets.size(); counter++) {
