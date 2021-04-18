@@ -40,9 +40,9 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 3. Enter your new problem discription
 4. Enter your problem severity (1 for low, 2 for medium and 3 for high).
 
-#### View Staff Tickets
+#### View Your Open Tickets
 1. Follow Login section, steps 1-3 as a prerequisite.
-2. Enter 2 in the staff menu to view open tickets.
+2. Enter 2 in the staff menu to view your open tickets.
 
 ## Usage - Technicians mode
 #### Login
@@ -51,14 +51,21 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 3. Enter your password after the prompt.
 4. If you have forgotten your password then enter 1 to retrieve your password.
 
-#### View Your Tickets
-1. Follow Login section, steps 1-3 as a prerequisite.
-2. Enter 1 in the staff menu to view open tickets.
+#### View Assigned Tickets
+1. Enter 1 when in the Technician Menu.
 
-#### View All Tickets
-1. Follow Login section, steps 1-3 as a prerequisite.
-2. Enter 2 in the staff menu to view open tickets.
+#### Change Ticket Severity
+1. Select 2 in the Technician Menu.
+2. Enter the number corresponding with the ticket number you wish to alter. 
+3. Enter a severity level between 1 - 3.
 
+### Change Ticket Status 
+1. Select 3 in the Technician Menu.
+2. Enter the number corresponding with the ticket number you wish to alter.
+3. Enter either 1 for closed and resolved or 2 for colsed and unresolved.
+
+### View All Tickets
+1. Select 4 in the Technician Menu to view all tickets within the system.
 
 
 ## Roadmap
@@ -66,16 +73,21 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 
 Version 2.0 - Assign tickets to technicians based on level and current assigned tickets
             - Ticket status'
-            - Staff ticket management system
+            - Technicians ticket severity 
+            - Tickets can be closed and reopened and set as resolved or unresolved
+            - Technicians can view assigned tickets and all tickets in the system
+            - Staff can create tickets and view open tickets
 
 Version 1.0 - Main menu functionality with account creation ability, login and retrieval of password. 
             - Staff menu functionality with ability, to log new tickets
 
 #### Future Versions
-- Manage tickets
+- Tickets are automatically reassigned to a level 2 tech when their severity level is moved from low or medium to high
 - Ticket archive system
-- Change a severity level to tickets
+- Reopen closed tickets 
 
+### Known Bugs
+- Sometimes technicians do not have the ability to change the status or severity of a ticket.
 
 ## F.A.Q.
 Q. H:\Sprint1-A2G2\A2-G2-main\src does not exist when I run the command in step 10.
