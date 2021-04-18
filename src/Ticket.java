@@ -2,12 +2,11 @@
 public class Ticket {
 
 	private String problemDescription;
-	private int problemSeverity;
+	private String problemSeverity;
 	private String status;
-	private User issuedBy;
-	private User technician;
+	private User issuedBy, technician;
 
-	public Ticket(String problemDescription, int problemSeverity, User issuedBy, User technician) {
+	public Ticket(String problemDescription, String problemSeverity, User issuedBy, User technician) {
 		this.problemDescription = problemDescription;
 		this.problemSeverity = problemSeverity;
 		this.status = "Open";
@@ -23,13 +22,13 @@ public class Ticket {
 		this.problemDescription = problemDescription;
 	}
 
-	public int getProblemSeverity() {
+	public String getProblemSeverity() {
 		return problemSeverity;
 	}
 
-//	public void setProblemSeverity(int problemSeverity) {
-//		this.problemSeverity = problemSeverity;
-//	}
+	public void setProblemSeverity(String problemSeverity) {
+		this.problemSeverity = problemSeverity;
+	}
 
 	public String getStatus() {
 		return status;

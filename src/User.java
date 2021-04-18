@@ -1,10 +1,7 @@
 
 public abstract class User {
 
-	private String name;
-	private String email;
-	private String password;
-	private String contactNumber;
+	private String name, email, password, contactNumber;
 
 	public User(String name, String email, String password, String contactNumber) {
 		this.name = name;
