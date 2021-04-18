@@ -28,24 +28,21 @@ public class Main {
 		displayMainMenu();
 	}
 
-	
 	// for testing - delete when done
 	private void fastTest() {
-		
+
 		addTechnicians();
-		
+
 //		logs staff user in - skips main menu
 		User staffUser = new Staff("Staff User", "1", "1", "0400000001");
 		users.add(staffUser);
 		this.loggedInUser = staffUser;
-		
-		
+
 //		logs tech user in - skips main menu - uncomment to use
 		User techUser = new Technician("Technician", "2", "2", "0400000006", 2);
 //		users.add(techUser);
 //		this.loggedInUser = techUser;
-		
-		
+
 //		go to the right user menu
 		if (this.loggedInUser instanceof Staff) {
 			displayStaffMenu();
@@ -60,11 +57,11 @@ public class Main {
 //	Create and add Technicians to the system
 	private void addTechnicians() {
 
-		User harry = new Technician("Harry Styles", "HS@cirno.com", "HS", "0400000001", 1);
-		User niall = new Technician("Niall Horanan", "NH@cirno.com", "NH", "0400000002", 1);
-		User liam = new Technician("Liam Payne", "LP@cirno.com", "LP", "0400000003", 1);
-		User louis = new Technician("Louis Tomlinson", "LT@cirno.com", "LT", "0400000004", 2);
-		User zayn = new Technician("Zayn Malik", "ZM@cirno.com", "ZM", "0400000005", 2);
+		User harry = new Technician("Harry Styles", "HS@cinco.com", "HS", "0400000001", 1);
+		User niall = new Technician("Niall Horanan", "NH@cinco.com", "NH", "0400000002", 1);
+		User liam = new Technician("Liam Payne", "LP@cinco.com", "LP", "0400000003", 1);
+		User louis = new Technician("Louis Tomlinson", "LT@cinco.com", "LT", "0400000004", 2);
+		User zayn = new Technician("Zayn Malik", "ZM@cinco.com", "ZM", "0400000005", 2);
 
 		Collections.addAll(users, harry, niall, liam, louis, zayn);
 	}
@@ -375,6 +372,7 @@ public class Main {
 			Ticket currentTicket = tickets.get(counter);
 
 			if (currentTicket.getIssuedBy() == this.loggedInUser) {
+				System.out.println();
 				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
 				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
 				System.out.printf("Status: %s\n", currentTicket.getStatus());
@@ -388,28 +386,56 @@ public class Main {
 	}
 
 	private void newTicket() {
-		System.out.println("Please enter your problem description: ");
+		System.out.print("Please enter your problem description: ");
 		String problemDescription = scanner.nextLine();
 
-		System.out.println("Please enter your problem severity:(1 for higher priority or 2 for lower priority)");
-		int problemSeverity = scanner.nextInt();
+		System.out.println("Please select your problem severity.");
+		System.out.println("1. Low");
+		System.out.println("2. Medium");
+		System.out.println("3. High");
+		System.out.print("Please select an option: ");
+		int severitySelected = scanner.nextInt();
 		scanner.nextLine();
 
-		User assignedTechnician = assignTechnician(problemSeverity);
+//		Sets the severity and service desk level based on user input
+		int serviceDeskLevel = 0;
+		String severity = null;
 
-		Ticket ticket = new Ticket(problemDescription, problemSeverity, this.loggedInUser, assignedTechnician);
+		switch (severitySelected) {
+		case 1:
+			serviceDeskLevel = 1;
+			severity = "Low";
+			break;
+
+		case 2:
+			serviceDeskLevel = 1;
+			severity = "Medium";
+			break;
+
+		case 3:
+			serviceDeskLevel = 2;
+			severity = "High";
+			break;
+
+		}
+
+		User assignedTechnician = assignTechnician(serviceDeskLevel);
+
+		Ticket ticket = new Ticket(problemDescription, severity, this.loggedInUser, assignedTechnician);
 
 		tickets.add(ticket);
+
+		System.out.println("--------------------------------------");
 		System.out.println("Your ticket has been submitted, you can expect a response within 24 hours.");
 
 		displayStaffMenu();
 
 	}
 
-	private User assignTechnician(int problemSeverity) {
+	private User assignTechnician(int serviceDeskLevel) {
 
 //		create list of techs with same severity level
-		Map<User, Integer> technicians = createTechnicianList(problemSeverity);
+		Map<User, Integer> technicians = createTechnicianList(serviceDeskLevel);
 
 //		count tickets of techs
 		Map<User, Integer> technicianTicketCount = countTickets(technicians);
@@ -440,17 +466,16 @@ public class Main {
 //			random selection
 			Random random = new Random();
 			assignedUser = techs.get(random.nextInt(techs.size()));
-		} 
-		
+		}
+
 		else {
 //			assign single tech
 			assignedUser = techs.get(0);
 		}
-		
+
 		return assignedUser;
 	}
 
-	
 //	count tickets of user
 	private Map<User, Integer> countTickets(Map<User, Integer> technicians) {
 
