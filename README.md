@@ -16,7 +16,7 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 11. Enter "java Main" to run the program.
 12. You have successfully entered the program. 
 
-## Usage
+## Usage - Staff mode
 #### Login
 1. Login to an existing account by entering 1 into the console. 
 2. Enter your email address after the prompt.
@@ -44,10 +44,27 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 1. Follow Login section, steps 1-3 as a prerequisite.
 2. Enter 2 in the staff menu to view open tickets.
 
+## Usage - Technicians mode
+#### Login
+1. Login to an existing account by entering 1 into the console. 
+2. Enter your email address after the prompt.
+3. Enter your password after the prompt.
+4. If you have forgotten your password then enter 1 to retrieve your password.
+
+#### View Your Tickets
+1. Follow Login section, steps 1-3 as a prerequisite.
+2. Enter 1 in the staff menu to view open tickets.
+
+#### View All Tickets
+1. Follow Login section, steps 1-3 as a prerequisite.
+2. Enter 2 in the staff menu to view open tickets.
+
+
+
 ## Roadmap
 #### Current Versions
+
 Version 2.0 - Assign tickets to technicians based on level and current assigned tickets
-            - Assign a severity level to tickets
             - Ticket status'
             - Staff ticket management system
 
@@ -57,6 +74,8 @@ Version 1.0 - Main menu functionality with account creation ability, login and r
 #### Future Versions
 - Manage tickets
 - Ticket archive system
+- Change a severity level to tickets
+
 
 ## F.A.Q.
 Q. H:\Sprint1-A2G2\A2-G2-main\src does not exist when I run the command in step 10.
