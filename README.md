@@ -38,7 +38,7 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 1. Follow Login section, steps 1-3 as a prerequisite.
 2. To submit a new ticket enter 1 into the console to view staff menu. 
 3. Enter your new problem discription
-4. Enter your problem severity (1 for high, 2 for medium and 3 for low).
+4. Enter your problem severity (1 for low, 2 for medium and 3 for high).
 
 #### View Staff Tickets
 1. Follow Login section, steps 1-3 as a prerequisite.
