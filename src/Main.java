@@ -21,17 +21,18 @@ public class Main {
 		users = new ArrayList<>();
 		tickets = new ArrayList<>();
 
-		// for testing - delete when done
-//		fastTest();
-
 		addTechnicians();
+//		fastTest();
+		
+		
+		
 		displayMainMenu();
 	}
-
-	// for testing - delete when done
+	
+	
 	private void fastTest() {
 
-		addTechnicians();
+		
 
 //		logs staff user in - skips main menu
 		User staffUser = new Staff("Staff User", "1", "1", "0400000001");
@@ -85,9 +86,7 @@ public class Main {
 	private void displayMainMenu() {
 
 //		Menu Options
-		System.out.println("--------------------------------------");
-		System.out.println("Main Menu");
-		System.out.println("--------------------------------------");
+		displayMessageHeader("Main Menu");
 		System.out.println("0. Exit");
 		System.out.println("1. Login");
 		System.out.println("2. Create Account");
@@ -115,7 +114,7 @@ public class Main {
 			login();
 			break;
 		case 2:
-			createAccount();
+			createStaffAccount();
 			break;
 		case 3:
 			forgottenPassword();
@@ -123,26 +122,29 @@ public class Main {
 		}
 
 	}
+	
+	private void displayMessageHeader(String message) {
+		System.out.println("--------------------------------------");
+		System.out.println(message);
+		System.out.println("--------------------------------------");
+	}
 
 	private void exit() {
-		System.out.println("--------------------------------------");
-		System.out.println("You have exited the program.");
-		System.out.println("--------------------------------------");
+		displayMessageHeader("You have exited the program.");
 		System.exit(0);
 
 	}
 
 	private void login() {
-		System.out.println("--------------------------------------");
-		System.out.println("Login Selected");
-		System.out.println("--------------------------------------");
+		displayMessageHeader("Login Selected");
+
 
 		User user = null;
 		boolean usernameCorrect = false;
 
 //		Asks for login email
 		do {
-			System.out.println("Please enter your email: ");
+			System.out.print("Please enter your email: ");
 			String email = scanner.nextLine();
 
 			for (int counter = 0; counter < users.size(); counter++) {
@@ -170,7 +172,7 @@ public class Main {
 		boolean passwordCorrect = false;
 
 		do {
-			System.out.println("Please enter your password: ");
+			System.out.print("Please enter your password: ");
 			String password = scanner.nextLine();
 
 			if (totalAttempts != 0) {
@@ -222,22 +224,21 @@ public class Main {
 	}
 
 	private void displayTechnicianMenu() {
-		System.out.println("--------------------------------------");
-		System.out.println("Technician Menu");
-		System.out.println("--------------------------------------");
-
+		
+		displayMessageHeader("Technician Menu");
 		System.out.println("0. Logout");
-		System.out.println("1. Change Severity");
-		System.out.println("2. Change Status");
-		System.out.println("3. View all Tickets");
-		System.out.println("4. Re-open Ticket");
+		System.out.println("1. View Assigned Tickets");
+		System.out.println("2. Change Severity");
+		System.out.println("3. Change Status");
+		System.out.println("4. View all Tickets");
+		System.out.println("5. Re-open Ticket");
 		System.out.println();
 
 //		Requires valid user input
 		System.out.print("Please select an option: ");
 		int menuInput = scanner.nextInt();
 
-		while (menuInput > 4 || menuInput < 0) {
+		while (menuInput > 5 || menuInput < 0) {
 			System.out.print("Please select an option: ");
 			menuInput = scanner.nextInt();
 
@@ -248,22 +249,26 @@ public class Main {
 
 		switch (menuInput) {
 		case 0:
-			exit();
+			displayMainMenu();
 			break;
-			
+
 		case 1:
-			changeSeverity();
+			checkAssignedTicketsAsTech();
 			break;
-			
+
 		case 2:
-			changeStatus();
+			changeSeverity();
 			break;
 
 		case 3:
-			technicianViewAllTickets();
+			changeStatus();
 			break;
 
 		case 4:
+			checkAllTicketsAsTech();
+			break;
+
+		case 5:
 			reopenTicket();
 			break;
 
@@ -272,38 +277,31 @@ public class Main {
 	}
 
 	private void reopenTicket() {
-		
-		
+
 		ArrayList<Ticket> tempTickets = new ArrayList<>();
 
-		
 		int ticketCounter = 0;
 		for (int counter = 0; counter < tickets.size(); counter++) {
 
 			Ticket currentTicket = tickets.get(counter);
-			
 
 			if (
-					currentTicket.getStatus().equals("Closed & Resolved") || 
-					currentTicket.getStatus().equals("Closed & Unresolved"))
+					currentTicket.getStatus().equals("Closed & Resolved")
+					|| currentTicket.getStatus().equals("Closed & Unresolved"))
 
 			{
 				System.out.println();
 				System.out.println("--------------------------------------");
 				System.out.printf("Ticket Number %s\n", ticketCounter);
 				System.out.println("--------------------------------------");
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Status: %s\n", currentTicket.getStatus());
-				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
-				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				displayTicketInfo(currentTicket);
 				tempTickets.add(currentTicket);
 				ticketCounter++;
 			}
 
 		}
-		
-		if(tempTickets.isEmpty()) {
+
+		if (tempTickets.isEmpty()) {
 			System.out.println("There are no tickets that can be reopened at this time.");
 			displayTechnicianMenu();
 		}
@@ -322,13 +320,8 @@ public class Main {
 			if (tempTickets.get(ticketSelected).equals(currentTicket)) {
 				System.out.println("--------------------------------------");
 				System.out.println("Ticket Selected");
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Status: %s\n", currentTicket.getStatus());
-				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
-				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				displayTicketInfo(currentTicket);
 				System.out.println("--------------------------------------");
-				
 
 				System.out.printf("Re-open Ticket?\n");
 				System.out.println("--------------------------------------");
@@ -357,103 +350,57 @@ public class Main {
 
 			}
 		}
-		
+
 		displayTechnicianMenu();
-		
-	}
 
-	private void technicianViewAllTickets() {
-
-//		display tickets belonging to logged in tech or have status of closed or archived
-		for (int counter = 0; counter < tickets.size(); counter++) {
-
-			Ticket currentTicket = tickets.get(counter);
-
-			if (
-					currentTicket.getTechnician() == this.loggedInUser || 
-					currentTicket.getStatus().equals("Closed & Resolved") || 
-					currentTicket.getStatus().equals("Closed & Unresolved") || 
-					currentTicket.getStatus().equals("Archived")) 
-			
-			{
-				System.out.println();
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Status: %s\n", currentTicket.getStatus());
-				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
-				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
-			}
-
-		}
-		
-		if(tickets.isEmpty()) {
-			System.out.println("There are no tickets in the system.");
-			displayTechnicianMenu();
-		}
-		
-		
-		displayTechnicianMenu();
-		
 	}
 
 	private void changeStatus() {
 
-		
 		ArrayList<Ticket> tempTickets = new ArrayList<>();
-		
-		
+
 		int ticketCounter = 0;
 		for (int counter = 0; counter < tickets.size(); counter++) {
 
-			
 			Ticket currentTicket = tickets.get(counter);
-			
 
-			if (
-					currentTicket.getTechnician() == this.loggedInUser && 
-					currentTicket.getStatus().equals("Open"))  
+			if (currentTicket.getTechnician() == this.loggedInUser && currentTicket.getStatus().equals("Open"))
 
 			{
 				System.out.println();
 				System.out.println("--------------------------------------");
 				System.out.printf("Ticket Number %s\n", ticketCounter);
 				System.out.println("--------------------------------------");
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Issued by: %s", currentTicket.getIssuedBy().getName());
+				displayTicketInfo(currentTicket);
 				tempTickets.add(currentTicket);
 				ticketCounter++;
 			}
-			
-			if(tempTickets.isEmpty()) {
-				System.out.println("There are no tickets in the system.");
-				displayTechnicianMenu();
-			}
 
 		}
-		
+
+		if (tempTickets.isEmpty()) {
+			System.out.println("There are no tickets in the system.");
+			displayTechnicianMenu();
+		}
+
 		System.out.println();
 		System.out.println("--------------------------------------");
 		System.out.print("Please select a ticket: ");
 		int ticketSelected = scanner.nextInt();
-		
+
 		scanner.nextLine();
-		
+
 		for (int counter = 0; counter < tickets.size(); counter++) {
-			
+
 			Ticket currentTicket = tickets.get(counter);
-			
-			if(tempTickets.get(ticketSelected).equals(currentTicket)) {
+
+			if (tempTickets.get(ticketSelected).equals(currentTicket)) {
 				System.out.println("--------------------------------------");
 				System.out.println("Ticket Selected");
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Status: %s\n", currentTicket.getStatus());
-				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
-				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				displayTicketInfo(currentTicket);
 				System.out.println("--------------------------------------");
 				System.out.println();
-				
+
 				System.out.println("Change status from Open to");
 				System.out.println("1. Closed & Resolved");
 				System.out.println("2. Closed & Unresolved");
@@ -467,11 +414,11 @@ public class Main {
 				case 1:
 					currentTicket.setStatus("Closed & Resolved");
 					break;
-					
+
 				case 2:
 					currentTicket.setStatus("Closed & Unresolved");
 					break;
-					
+
 				case 3:
 					displayTechnicianMenu();
 					break;
@@ -481,7 +428,7 @@ public class Main {
 			}
 		}
 		displayTechnicianMenu();
-		
+
 	}
 
 	private void changeSeverity() {
@@ -499,18 +446,16 @@ public class Main {
 				System.out.println("--------------------------------------");
 				System.out.printf("Ticket Number %s\n", ticketCounter);
 				System.out.println("--------------------------------------");
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Issued by: %s", currentTicket.getIssuedBy().getName());
+				displayTicketInfo(currentTicket);
 				tempTickets.add(currentTicket);
 				ticketCounter++;
 			}
-			
-			if(tempTickets.isEmpty()) {
-				System.out.println("There are no tickets in the system.");
-				displayTechnicianMenu();
-			}
 
+		}
+
+		if (tempTickets.isEmpty()) {
+			System.out.println("There are no tickets in the system.");
+			displayTechnicianMenu();
 		}
 
 		System.out.println();
@@ -527,13 +472,8 @@ public class Main {
 			if (tempTickets.get(ticketSelected).equals(currentTicket)) {
 				System.out.println("--------------------------------------");
 				System.out.println("Ticket Selected");
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Status: %s\n", currentTicket.getStatus());
-				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
-				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				displayTicketInfo(currentTicket);
 				System.out.println("--------------------------------------");
-				
 
 				System.out.printf("Current Severity: %s \n", currentTicket.getProblemSeverity());
 				System.out.println("--------------------------------------");
@@ -541,22 +481,30 @@ public class Main {
 				System.out.println("2. Medium");
 				System.out.println("3. High");
 				System.out.println("4. Exit");
-
+				System.out.println();
+				
+				System.out.print("Please select an option: ");
 				int severitySelected = scanner.nextInt();
 
 				scanner.nextLine();
+				
+				int serviceDeskLevel = 0;
+				String severity = null;
 
 				switch (severitySelected) {
 				case 1:
-					currentTicket.setProblemSeverity("Low");
+					severity = "Low";
+					serviceDeskLevel = 1;
 					break;
 
 				case 2:
-					currentTicket.setProblemSeverity("Medium");
+					severity = "Medium";
+					serviceDeskLevel = 1;
 					break;
-					
+
 				case 3:
-					currentTicket.setProblemSeverity("High");
+					severity = "High";
+					serviceDeskLevel = 2;
 					break;
 
 				case 4:
@@ -564,16 +512,31 @@ public class Main {
 					break;
 
 				}
+				
+
+//				reassign technician if the severity level has changed
+				if (!currentTicket.getProblemSeverity().equals(severity)) {
+					System.out.printf("Severity level has been changed from %s to %s.\n",
+							currentTicket.getProblemSeverity(), severity);
+
+					currentTicket.setProblemSeverity(severity);
+					currentTicket.setTechnician(assignTechnician(serviceDeskLevel));
+
+				}
+				
+				else {
+					System.out.printf("Severity level remains %s.\n", currentTicket.getProblemSeverity());
+				}
+				
+				
 
 			}
 		}
 		displayTechnicianMenu();
 	}
 
-	private void createAccount() {
-		System.out.println("--------------------------------------");
-		System.out.println("Create Account Selected");
-		System.out.println("--------------------------------------");
+	private void createStaffAccount() {
+		displayMessageHeader("Create Account Selected");
 
 		String email;
 		boolean emailIsUnique = false;
@@ -581,7 +544,7 @@ public class Main {
 //		Asks user for unique email. Will repeat until user enters a unique email.
 		do {
 
-			System.out.println("Please enter your email: ");
+			System.out.print("Please enter your email: ");
 			email = scanner.nextLine();
 
 			int usersFound = 0;
@@ -596,7 +559,7 @@ public class Main {
 			}
 
 			if (usersFound > 0) {
-				System.out.println("Account with this email already exists.");
+				System.out.print("Account with this email already exists.");
 			}
 
 			else {
@@ -607,10 +570,10 @@ public class Main {
 
 		while (!emailIsUnique);
 
-		System.out.println("Please enter your full name: ");
+		System.out.print("Please enter your full name: ");
 		String name = scanner.nextLine();
 
-		System.out.println("Please enter your contact number: ");
+		System.out.print("Please enter your contact number: ");
 		String contactNumber = scanner.nextLine();
 
 //		Asks user to enter password
@@ -618,7 +581,7 @@ public class Main {
 		boolean validPassword = false;
 		do {
 
-			System.out.println("Please select a password: ");
+			System.out.print("Please select a password: ");
 			password = scanner.nextLine();
 
 //		Regex for password. Required 1 Upper, 1 Lower, 1 Digit, 20 min characters.
@@ -632,8 +595,7 @@ public class Main {
 			}
 
 			else {
-				System.out.println(
-						"Password must contain 1 uppercase, 1 lowercase, 1 digit and must be 20 characters in length.");
+				displayMessageHeader("Password must contain:\n 1 uppercase\n 1 lowercase\n 1 digit\n Must be 20 characters in length");
 			}
 
 		} while (!validPassword);
@@ -648,15 +610,13 @@ public class Main {
 	}
 
 	private void forgottenPassword() {
-		System.out.println("--------------------------------------");
-		System.out.println("Forgotten Password Selected");
-		System.out.println("--------------------------------------");
+		displayMessageHeader("Forgotten Password Selected");
 
 //		Check if user exists
 		boolean passwordFound = false;
 		do {
 
-			System.out.println("Please enter your email: ");
+			System.out.print("Please enter your email: ");
 			String email = scanner.nextLine();
 
 			for (int counter = 0; counter < users.size(); counter++) {
@@ -672,7 +632,7 @@ public class Main {
 			}
 
 			if (!passwordFound) {
-				System.out.println("Account does not exist.");
+				displayMessageHeader("Account does not exist.");
 			}
 
 		}
@@ -683,13 +643,11 @@ public class Main {
 
 	}
 
-//	Main Menu
+
 	private void displayStaffMenu() {
 
 //		Menu Options
-		System.out.println("--------------------------------------");
-		System.out.println("Staff Menu");
-		System.out.println("--------------------------------------");
+		displayMessageHeader("Staff Menu");
 		System.out.println("0. Logout");
 		System.out.println("1. Submit new ticket");
 		System.out.println("2. Check existing ticket status");
@@ -713,28 +671,36 @@ public class Main {
 			displayMainMenu();
 			break;
 		case 1:
-			newTicket();
+			createTicket();
 			break;
 		case 2:
-			checkTickets();
+			checkTicketsAsStaff();
 			break;
 		}
 
 	}
 
-	private void checkTickets() {
+	private void displayTicketInfo(Ticket currentTicket) {
+
+		System.out.println();
+		System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+		System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+		System.out.printf("Status: %s\n", currentTicket.getStatus());
+		System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+		System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+		System.out.println();
+	}
+	
+
+
+	private void checkTicketsAsStaff() {
 
 		for (int counter = 0; counter < tickets.size(); counter++) {
 
 			Ticket currentTicket = tickets.get(counter);
 
 			if (currentTicket.getIssuedBy() == this.loggedInUser) {
-				System.out.println();
-				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
-				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
-				System.out.printf("Status: %s\n", currentTicket.getStatus());
-				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
-				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				displayTicketInfo(currentTicket);
 			}
 
 		}
@@ -742,7 +708,52 @@ public class Main {
 		displayStaffMenu();
 	}
 
-	private void newTicket() {
+	
+//	View all tickets assigned to the logged in technician.
+	private void checkAssignedTicketsAsTech() {
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			if (currentTicket.getTechnician() == this.loggedInUser) {
+				displayTicketInfo(currentTicket);
+			}
+		}
+
+		displayTechnicianMenu();
+	}
+
+	
+//	display tickets belonging to logged in tech or have status of closed or archived.
+	private void checkAllTicketsAsTech() {
+
+		if (tickets.isEmpty()) {
+			System.out.println("There are no tickets in the system.");
+			displayTechnicianMenu();
+		}
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			if (currentTicket.getTechnician() == this.loggedInUser
+					|| currentTicket.getStatus().equals("Closed & Resolved")
+					|| currentTicket.getStatus().equals("Closed & Unresolved")
+					|| currentTicket.getStatus().equals("Archived"))
+
+			{
+				displayTicketInfo(currentTicket);
+			}
+
+		}
+
+		displayTechnicianMenu();
+
+	}
+	
+
+	private void createTicket() {
 		System.out.print("Please enter your problem description: ");
 		String problemDescription = scanner.nextLine();
 
