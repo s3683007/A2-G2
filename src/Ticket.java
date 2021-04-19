@@ -52,4 +52,9 @@ public class Ticket {
 		return this.technician;
 	}
 
+	public void setTechnician(User technician) {
+		this.technician = technician;
+		
+	}
+
 }
