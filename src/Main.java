@@ -23,16 +23,11 @@ public class Main {
 
 		addTechnicians();
 //		fastTest();
-		
-		
-		
+
 		displayMainMenu();
 	}
-	
-	
-	private void fastTest() {
 
-		
+	private void fastTest() {
 
 //		logs staff user in - skips main menu
 		User staffUser = new Staff("Staff User", "1", "1", "0400000001");
@@ -43,18 +38,16 @@ public class Main {
 		User techUser = new Technician("Technician", "2", "2", "0400000006", 2);
 		users.add(techUser);
 		this.loggedInUser = techUser;
-		
-		
+
 		User techUser2 = new Technician("Technician 2", "3", "3", "0400000006", 2);
 		users.add(techUser2);
-		
+
 //		fake ticket for testing
 		Ticket ticket = new Ticket("test 1", "High", staffUser, techUser);
 		Ticket ticket2 = new Ticket("test 2", "High", staffUser, techUser);
 		Ticket ticket3 = new Ticket("test 3", "High", staffUser, techUser);
 		ticket3.setStatus("Closed & Resolved");
-		
-		
+
 		tickets.add(ticket);
 		tickets.add(ticket2);
 		tickets.add(ticket3);
@@ -114,7 +107,7 @@ public class Main {
 			login();
 			break;
 		case 2:
-			createStaffAccount();
+			createAccount();
 			break;
 		case 3:
 			forgottenPassword();
@@ -122,7 +115,7 @@ public class Main {
 		}
 
 	}
-	
+
 	private void displayMessageHeader(String message) {
 		System.out.println("--------------------------------------");
 		System.out.println(message);
@@ -137,7 +130,6 @@ public class Main {
 
 	private void login() {
 		displayMessageHeader("Login Selected");
-
 
 		User user = null;
 		boolean usernameCorrect = false;
@@ -224,7 +216,7 @@ public class Main {
 	}
 
 	private void displayTechnicianMenu() {
-		
+
 		displayMessageHeader("Technician Menu");
 		System.out.println("0. Logout");
 		System.out.println("1. View Assigned Tickets");
@@ -249,6 +241,7 @@ public class Main {
 
 		switch (menuInput) {
 		case 0:
+			this.loggedInUser = null;
 			displayMainMenu();
 			break;
 
@@ -285,8 +278,7 @@ public class Main {
 
 			Ticket currentTicket = tickets.get(counter);
 
-			if (
-					currentTicket.getStatus().equals("Closed & Resolved")
+			if (currentTicket.getStatus().equals("Closed & Resolved")
 					|| currentTicket.getStatus().equals("Closed & Unresolved"))
 
 			{
@@ -482,12 +474,12 @@ public class Main {
 				System.out.println("3. High");
 				System.out.println("4. Exit");
 				System.out.println();
-				
+
 				System.out.print("Please select an option: ");
 				int severitySelected = scanner.nextInt();
 
 				scanner.nextLine();
-				
+
 				int serviceDeskLevel = 0;
 				String severity = null;
 
@@ -512,7 +504,6 @@ public class Main {
 					break;
 
 				}
-				
 
 //				reassign technician if the severity level has changed
 				if (!currentTicket.getProblemSeverity().equals(severity)) {
@@ -523,23 +514,32 @@ public class Main {
 					currentTicket.setTechnician(assignTechnician(serviceDeskLevel));
 
 				}
-				
+
 				else {
 					System.out.printf("Severity level remains %s.\n", currentTicket.getProblemSeverity());
 				}
-				
-				
 
 			}
 		}
 		displayTechnicianMenu();
 	}
 
-	private void createStaffAccount() {
+	private void createAccount() {
 		displayMessageHeader("Create Account Selected");
 
 		String email;
 		boolean emailIsUnique = false;
+
+		System.out.println("Type of account:");
+		System.out.println("1. Staff");
+		System.out.println("2. Technician");
+		System.out.println();
+
+		System.out.print("Please select an option: ");
+
+		int typeOfAccount = scanner.nextInt();
+		scanner.nextLine();
+		System.out.println();
 
 //		Asks user for unique email. Will repeat until user enters a unique email.
 		do {
@@ -595,18 +595,43 @@ public class Main {
 			}
 
 			else {
-				displayMessageHeader("Password must contain:\n 1 uppercase\n 1 lowercase\n 1 digit\n Must be 20 characters in length");
+				displayMessageHeader(
+						"Password must contain:\n 1 uppercase\n 1 lowercase\n 1 digit\n Must be 20 characters in length");
 			}
 
 		} while (!validPassword);
 
-//	If details are correct create a staff user
-		User user = new Staff(name, email, password, contactNumber);
+//		create user based on user selection
+		User newUser = null;
 
-		users.add(user);
+		switch (typeOfAccount) {
+		case 1:
+			newUser = new Staff(name, email, password, contactNumber);
+			break;
+
+		case 2:
+			System.out.print("Please enter service desk level (1 or 2): ");
+			int serviceDeskLevel = scanner.nextInt();
+			scanner.nextLine();
+			newUser = new Technician(name, email, password, contactNumber, serviceDeskLevel);
+			break;
+		}
+
+		users.add(newUser);
 		System.out.println("You have successfully created an account.");
 
-		displayMainMenu();
+		this.loggedInUser = newUser;
+		System.out.println("Logged in as " + this.loggedInUser.getName());
+
+//		log into newly created account
+		if (this.loggedInUser instanceof Staff) {
+			displayStaffMenu();
+		}
+
+		else if (this.loggedInUser instanceof Technician) {
+			displayTechnicianMenu();
+		}
+
 	}
 
 	private void forgottenPassword() {
@@ -643,7 +668,6 @@ public class Main {
 
 	}
 
-
 	private void displayStaffMenu() {
 
 //		Menu Options
@@ -668,6 +692,7 @@ public class Main {
 
 		switch (menuInput) {
 		case 0:
+			this.loggedInUser = null;
 			displayMainMenu();
 			break;
 		case 1:
@@ -690,8 +715,6 @@ public class Main {
 		System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
 		System.out.println();
 	}
-	
-
 
 	private void checkTicketsAsStaff() {
 
@@ -708,7 +731,6 @@ public class Main {
 		displayStaffMenu();
 	}
 
-	
 //	View all tickets assigned to the logged in technician.
 	private void checkAssignedTicketsAsTech() {
 
@@ -724,7 +746,6 @@ public class Main {
 		displayTechnicianMenu();
 	}
 
-	
 //	display tickets belonging to logged in tech or have status of closed or archived.
 	private void checkAllTicketsAsTech() {
 
@@ -751,7 +772,6 @@ public class Main {
 		displayTechnicianMenu();
 
 	}
-	
 
 	private void createTicket() {
 		System.out.print("Please enter your problem description: ");

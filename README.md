@@ -24,11 +24,12 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 4. If you have forgotten your password then enter 1 to retrieve your password.
 
 #### Account Creation 
-1. Create an account by entering 2 into the console. 
-2. Enter your email address after the prompt.
-3. Enter your full name after the prompt.
-4. Enter your phone number after the prompt.
-5. Enter a unique password that is 20 characters minimum and contains the following: at least 1 uppercase letter, 1 lowercase letter and 1 number. 
+1. Create an account by entering 2 into the console.
+2. Select 1 when asked what type of account is to be created. 
+3. Enter your email address after the prompt.
+4. Enter your full name after the prompt.
+5. Enter your phone number after the prompt.
+6. Enter a unique password that is 20 characters minimum and contains the following: at least 1 uppercase letter, 1 lowercase letter and 1 number. 
 
 #### Forgotten Password
 1. Retrieve your password by selecting 3 into the console after viewing the main menu. 
@@ -51,6 +52,15 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 3. Enter your password after the prompt.
 4. If you have forgotten your password then enter 1 to retrieve your password.
 
+#### Account Creation 
+1. Create an account by entering 2 into the console.
+2. Select 2 when asked what type of account is to be created. 
+3. Enter your email address after the prompt.
+4. Enter your full name after the prompt.
+5. Enter your phone number after the prompt.
+6. Enter a unique password that is 20 characters minimum and contains the following: at least 1 uppercase letter, 1 lowercase letter and 1 number. 
+7. Enter the Service Desk Level after the prompt (1 or 2).
+
 #### View Assigned Tickets
 1. Enter 1 when in the Technician Menu.
 
@@ -62,10 +72,15 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 ### Change Ticket Status 
 1. Select 3 in the Technician Menu.
 2. Enter the number corresponding with the ticket number you wish to alter.
-3. Enter either 1 for closed and resolved or 2 for colsed and unresolved.
+3. Enter either 1 for closed and resolved or 2 for closed and unresolved.
 
 ### View All Tickets
 1. Select 4 in the Technician Menu to view all tickets within the system.
+
+### Re-open Ticket
+1. Select 5 in the Technician Menu to view all tickets within the system.
+2. Enter the number corresponding with the ticket number you wish to alter.
+3. Confirm decision after the prompt (1 for yes, 2 for no, 3 to exit.
 
 
 ## Roadmap
