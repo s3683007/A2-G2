@@ -82,6 +82,11 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 2. Enter the number corresponding with the ticket number you wish to alter.
 3. Confirm decision after the prompt (1 for yes, 2 for no, 3 to exit.
 
+### Generate Report
+1. Select 6 in the Technician Menu to access Report Generation submenu and view how many ticket are outstanding and resolved in the last 30 days.
+2. Enter the number in the submenu of the option you wish to generate a report of (1 for Resolved, 2 for Outstanding).
+
+
 
 ## Roadmap
 #### Current Versions
