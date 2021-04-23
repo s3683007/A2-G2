@@ -1,6 +1,11 @@
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,45 +27,7 @@ public class Main {
 		tickets = new ArrayList<>();
 
 		addTechnicians();
-//		fastTest();
-
 		displayMainMenu();
-	}
-
-	private void fastTest() {
-
-//		logs staff user in - skips main menu
-		User staffUser = new Staff("Staff User", "1", "1", "0400000001");
-		users.add(staffUser);
-		this.loggedInUser = staffUser;
-
-//		logs tech user in - skips main menu - uncomment to use
-		User techUser = new Technician("Technician", "2", "2", "0400000006", 2);
-		users.add(techUser);
-		this.loggedInUser = techUser;
-
-		User techUser2 = new Technician("Technician 2", "3", "3", "0400000006", 2);
-		users.add(techUser2);
-
-//		fake ticket for testing
-		Ticket ticket = new Ticket("test 1", "High", staffUser, techUser);
-		Ticket ticket2 = new Ticket("test 2", "High", staffUser, techUser);
-		Ticket ticket3 = new Ticket("test 3", "High", staffUser, techUser);
-		ticket3.setStatus("Closed & Resolved");
-
-		tickets.add(ticket);
-		tickets.add(ticket2);
-		tickets.add(ticket3);
-
-//		go to the right user menu
-		if (this.loggedInUser instanceof Staff) {
-			displayStaffMenu();
-		}
-
-		else if (this.loggedInUser instanceof Technician) {
-			displayTechnicianMenu();
-		}
-
 	}
 
 //	Create and add Technicians to the system
@@ -217,6 +184,8 @@ public class Main {
 
 	private void displayTechnicianMenu() {
 
+		archiveTickets();
+
 		displayMessageHeader("Technician Menu");
 		System.out.println("0. Logout");
 		System.out.println("1. View Assigned Tickets");
@@ -224,13 +193,14 @@ public class Main {
 		System.out.println("3. Change Status");
 		System.out.println("4. View all Tickets");
 		System.out.println("5. Re-open Ticket");
+		System.out.println("6. Generate Ticket report (last 30 days)");
 		System.out.println();
 
 //		Requires valid user input
 		System.out.print("Please select an option: ");
 		int menuInput = scanner.nextInt();
 
-		while (menuInput > 5 || menuInput < 0) {
+		while (menuInput > 6 || menuInput < 0) {
 			System.out.print("Please select an option: ");
 			menuInput = scanner.nextInt();
 
@@ -265,11 +235,189 @@ public class Main {
 			reopenTicket();
 			break;
 
+		case 6:
+			generateReport();
+			break;
+
+		}
+
+	}
+
+	private void generateReport() {
+
+		displayTicketReportCount();
+
+		System.out.println("Select type of report to generate");
+		System.out.println("1. Resolved Tickets");
+		System.out.println("2. Outstanding Tickets");
+		System.out.println("3. Exit");
+		System.out.println();
+
+		System.out.print("Please select an option: ");
+		int menuInput = scanner.nextInt();
+
+		scanner.nextLine();
+
+		System.out.println();
+
+		switch (menuInput) {
+		case 1:
+			generateResolvedTicketReport();
+			break;
+
+		case 2:
+			generateOutstandingTicketReport();
+			break;
+
+		case 3:
+			displayTechnicianMenu();
+			break;
+
+		default:
+			generateReport();
+			break;
+		}
+
+		displayTechnicianMenu();
+
+	}
+
+	private void displayTicketReportCount() {
+
+		int resolvedTicketCount = 0;
+		int outstandingTicketCount = 0;
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			switch (currentTicket.getStatus()) {
+
+			case "Open":
+				outstandingTicketCount++;
+				break;
+
+			case "Closed & Resolved":
+				resolvedTicketCount++;
+				break;
+
+			}
+
+		}
+
+		System.out.println();
+		System.out.printf("Resolved: %s\n", resolvedTicketCount);
+		System.out.printf("Outstanding: %s\n", outstandingTicketCount);
+		System.out.println();
+
+	}
+
+	private void generateOutstandingTicketReport() {
+
+		Instant oneMonthAgo = Instant.now().minus(30, ChronoUnit.DAYS);
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			int value = currentTicket.getTimeIssued().compareTo(oneMonthAgo);
+
+//			 if ticket was created within the timeframe
+			if (value > 0 && currentTicket.getStatus().equals("Open")) {
+
+//				convert time instant to readable format
+				Date date = Date.from(currentTicket.getTimeIssued());
+				SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy HH:mm:ss");
+				String formattedDate = formatter.format(date);
+
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Time Submitted: %s\n", formattedDate);
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.println();
+			}
+		}
+
+	}
+
+	private void generateResolvedTicketReport() {
+
+		Instant oneMonthAgo = Instant.now().minus(30, ChronoUnit.DAYS);
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+
+			int value = currentTicket.getTimeIssued().compareTo(oneMonthAgo);
+
+//		 if ticket was created within the timeframe
+			if (value > 0 && currentTicket.getStatus().contains("Resolved")) {
+
+//			convert time instant to readable format
+				Date date = Date.from(currentTicket.getTimeIssued());
+				SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy HH:mm:ss");
+				String formattedDate = formatter.format(date);
+
+//			time taken
+				Duration timeElapsed = Duration.between(currentTicket.getTimeIssued(), currentTicket.getTimeClosed());
+
+				long duration = 0;
+				String timeTaken;
+
+				if (timeElapsed.toDays() > 0) {
+					duration = timeElapsed.toDays();
+					timeTaken = String.format("%s day/s", duration);
+				}
+
+				else if (timeElapsed.toHours() > 0) {
+					duration = timeElapsed.toHours();
+					timeTaken = String.format("%s hour/s", duration);
+				}
+
+				else if (timeElapsed.toMinutes() > 0) {
+					duration = timeElapsed.toMinutes();
+					timeTaken = String.format("%s minute/s", duration);
+				}
+
+				else {
+					duration = timeElapsed.toSeconds();
+					timeTaken = String.format("%s second/s", duration);
+				}
+
+				System.out.printf("Description: %s\n", currentTicket.getProblemDescription());
+				System.out.printf("Severity: %s\n", currentTicket.getProblemSeverity());
+				System.out.printf("Time Submitted: %s\n", formattedDate);
+				System.out.printf("Issued by: %s\n", currentTicket.getIssuedBy().getName());
+				System.out.printf("Technician Assigned: %s\n", currentTicket.getTechnician().getName());
+				System.out.printf("Time Taken: %s\n", timeTaken);
+
+				System.out.println();
+			}
+		}
+
+	}
+
+//	check ticket and set status to archived if time closed in greater than 24 hours
+	private void archiveTickets() {
+
+		Instant currentTime = Instant.now();
+
+		for (int counter = 0; counter < tickets.size(); counter++) {
+
+			Ticket currentTicket = tickets.get(counter);
+			Duration timeElapsed = Duration.between(currentTime, currentTicket.getTimeIssued());
+
+			if (currentTicket.getStatus().contains("Closed") && timeElapsed.toHours() > 24) {
+				currentTicket.setStatus("Archived");
+			}
+
 		}
 
 	}
 
 	private void reopenTicket() {
+
+		Instant currentTime = Instant.now();
 
 		ArrayList<Ticket> tempTickets = new ArrayList<>();
 
@@ -277,9 +425,10 @@ public class Main {
 		for (int counter = 0; counter < tickets.size(); counter++) {
 
 			Ticket currentTicket = tickets.get(counter);
+			Duration timeElapsed = Duration.between(currentTime, currentTicket.getTimeIssued());
 
-			if (currentTicket.getStatus().equals("Closed & Resolved")
-					|| currentTicket.getStatus().equals("Closed & Unresolved"))
+//			display ticket that are closed that can be reopened.
+			if (currentTicket.getStatus().contains("Closed") && timeElapsed.toHours() < 24)
 
 			{
 				System.out.println();
@@ -321,6 +470,7 @@ public class Main {
 				System.out.println("2. No");
 				System.out.println("3. Exit");
 
+				System.out.println("Please select an option: ");
 				int reopenConfirmation = scanner.nextInt();
 
 				scanner.nextLine();
@@ -398,17 +548,25 @@ public class Main {
 				System.out.println("2. Closed & Unresolved");
 				System.out.println("3. Exit");
 
+				System.out.print("Please select an option: ");
 				int statusSelected = scanner.nextInt();
 
 				scanner.nextLine();
 
+//				create closing timestamp
+				Instant timeClosed = Instant.now();
+
 				switch (statusSelected) {
 				case 1:
 					currentTicket.setStatus("Closed & Resolved");
+					currentTicket.setTimeClosed(timeClosed);
 					break;
 
 				case 2:
 					currentTicket.setStatus("Closed & Unresolved");
+					currentTicket.setTimeClosed(timeClosed);
+
+					System.out.println(currentTicket);
 					break;
 
 				case 3:
@@ -670,6 +828,8 @@ public class Main {
 
 	private void displayStaffMenu() {
 
+		archiveTickets();
+
 //		Menu Options
 		displayMessageHeader("Staff Menu");
 		System.out.println("0. Logout");
@@ -809,7 +969,10 @@ public class Main {
 
 		User assignedTechnician = assignTechnician(serviceDeskLevel);
 
-		Ticket ticket = new Ticket(problemDescription, severity, this.loggedInUser, assignedTechnician);
+//		create timestamp
+		Instant timeIssued = Instant.now();
+
+		Ticket ticket = new Ticket(problemDescription, severity, this.loggedInUser, assignedTechnician, timeIssued);
 
 		tickets.add(ticket);
 
