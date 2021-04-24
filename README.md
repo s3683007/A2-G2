@@ -46,13 +46,13 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 2. Enter 2 in the staff menu to view your open tickets.
 
 ## Usage - Technicians mode
-#### Login
+### Login
 1. Login to an existing account by entering 1 into the console. 
 2. Enter your email address after the prompt.
 3. Enter your password after the prompt.
 4. If you have forgotten your password then enter 1 to retrieve your password.
 
-#### Account Creation 
+### Account Creation 
 1. Create an account by entering 2 into the console.
 2. Select 2 when asked what type of account is to be created. 
 3. Enter your email address after the prompt.
@@ -61,10 +61,10 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 6. Enter a unique password that is 20 characters minimum and contains the following: at least 1 uppercase letter, 1 lowercase letter and 1 number. 
 7. Enter the Service Desk Level after the prompt (1 or 2).
 
-#### View Assigned Tickets
+### View Assigned Tickets
 1. Enter 1 when in the Technician Menu.
 
-#### Change Ticket Severity
+### Change Ticket Severity
 1. Select 2 in the Technician Menu.
 2. Enter the number corresponding with the ticket number you wish to alter. 
 3. Enter a severity level between 1 - 3.
