@@ -87,14 +87,17 @@ Cinco is a multi level support ticket system that automatically assigns tickets,
 2. Enter the number in the submenu of the option you wish to generate a report of (1 for Resolved, 2 for Outstanding).
 
 
-
 ## Roadmap
 #### Current Versions
 
-Version 2.0 - Assign tickets to technicians based on level and current assigned tickets
-            - Ticket status'
-            - Technicians ticket severity 
+Version 3.0 - Technicians ticket severity can be changed
             - Tickets can be closed and reopened and set as resolved or unresolved
+            - Generate Ticket report (last 30 days)
+            - Reopen closed tickets 
+            - Tickets are automatically reassigned to a level 2 tech when their severity level is moved from low or medium to high
+
+Version 2.0 - Assign tickets to technicians based on level and current assigned tickets
+            - Ticket status viewable
             - Technicians can view assigned tickets and all tickets in the system
             - Staff can create tickets and view open tickets
 
@@ -102,12 +105,13 @@ Version 1.0 - Main menu functionality with account creation ability, login and r
             - Staff menu functionality with ability, to log new tickets
 
 #### Future Versions
-- Tickets are automatically reassigned to a level 2 tech when their severity level is moved from low or medium to high
-- Ticket archive system
-- Reopen closed tickets 
+            - Ticket archive system
+            - Bug fixes
+          
 
 ### Known Bugs
 - Sometimes technicians do not have the ability to change the status or severity of a ticket.
+- Sometimes all tickets are now shown when finding one to alter status or severity of.
 
 ## F.A.Q.
 Q. H:\Sprint1-A2G2\A2-G2-main\src does not exist when I run the command in step 10.
