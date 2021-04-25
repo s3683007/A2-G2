@@ -131,6 +131,16 @@ Q. I can not find command prompt
 
 A. Instead you can use Windows Powershell which is located within the start menu and can be found when scrolling down the menu.
 
+## Technician Accounts
+Username: HS@cinco.com
+Password: HS
+Username: LT@cinco.com
+Password: LT
+Username: ZM@cinco.com
+Password: ZM
+Username: NH@cinco.com
+Password: NH
+
 ## Authors
 [Rahin Farook](https://github.com/RahinF), [Alanna Hembrow](https://github.com/s3683007), and [Matthew Hughes](https://github.com/s3816641)
 
